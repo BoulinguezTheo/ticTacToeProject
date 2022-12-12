@@ -44,23 +44,21 @@ public class TicTacToe {
     }
 
     public boolean isWinner(){
-        int columnInput = playersInput[0];
-        int lineInput = playersInput[1];
-            //fonction détermine win
-        if (columnInput == sizeHeight && lineInput == sizeLength){
-            //check diag
-            for(int i = 1; i < this.size; i++){
-                if (this.boardArray[columnInput + i][lineInput + i] == this.player1.getSymbol()){
-                    continue;
-                }
-                if (this.boardArray[columnInput][lineInput + i] == this.player1.getSymbol()){
-                    continue;
-                }
-                if (this.boardArray[columnInput + i][lineInput] == this.player1.getSymbol()){
-                }
-            }
-        }
+        //vers la gauche
 
+        // vers la droite
+
+        //vers le haut
+
+        // vers le bas
+
+        // vers diag haut droite
+
+        // vers diag haut gauche
+
+        //vers diag bas droit
+
+        //vers diag bas gauche
 
         return false;
     }
