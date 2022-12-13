@@ -2,12 +2,12 @@ import java.util.Scanner;
 
 public class Player {
     private String representation;
-    public static int turn = 0;
+    public static int turn;
     String symbol;
 
 
     Player() {
-
+        turn = 0;
     }
 
     public int getTurns(){
