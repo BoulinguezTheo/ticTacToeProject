@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class Player {
     private String representation;
-    int turn;
+    public static int turn = 0;
     String symbol;
 
 
