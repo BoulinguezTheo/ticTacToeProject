@@ -3,9 +3,7 @@ import java.util.Arrays;
 
 public class TicTacToe {
     Player player1;
-    Player player2;
     private final int winCondition = 3;
-    private int size;
     private int sizeHeight;
     private int sizeLength;
     private boolean endGame;
@@ -22,21 +20,14 @@ public class TicTacToe {
     private ArrayList<ArrayList<int[]>> diagXPlusOneArraysO = new ArrayList<ArrayList<int[]>>();
     Cell board;
 
-    public String[][] getBoard(){
-        return this.boardArray;
-    }
-
-
 
     public TicTacToe() {   // Constructeur --> donner un valeur aux attributs
         board = new Cell();
-        size = 3;
         sizeHeight = 3;
         sizeLength = 3;
         boardArray = new String[sizeHeight][sizeLength];
         setupArray();
         player1 = new Player();
-        player2 = new Player();
         play();
     }
     public void play(){
@@ -104,18 +95,18 @@ public class TicTacToe {
     private boolean treatInputColumnLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
         if (arrayToCheck.size() == 0){
             createNewArrayOfCoordinates(arrayToCheck);
+            return false;
         } else {
             return checkIfGameWonColumnAndLines(arrayToCheck,coordinateToCheck);
         }
-        return false;
     }
     private boolean treatInputDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign){
         if (arrayToCheck.size() == 0){
             createNewArrayOfCoordinates(arrayToCheck);
+            return false;
         } else {
             return checkIfGameWonDiags(arrayToCheck, sign);
         }
-        return false;
     }
     private boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
         for(ArrayList<int[]> array : arrayToCheck){

@@ -15,14 +15,13 @@ public class Player {
     }
 
     public String getRepresentation() {
-        this.turn++;
-        if (this.turn % 2 != 0) {
+        turn++;
+        if (turn % 2 != 0) {
             symbol = "X";
-            return symbol;
         } else {
             symbol = "O";
-            return symbol;
         }
+        return symbol;
     }
     public String getSymbol(){
         return this.symbol;
@@ -42,7 +41,6 @@ public class Player {
         boolean validColumn, validLine;
         Scanner playerInput = new Scanner(System.in);
         int column, line;
-
         //Check if column input is valid
         System.out.print("Enter column: ");
         do {
