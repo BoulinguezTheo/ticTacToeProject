@@ -7,14 +7,6 @@ public class TicTacToe {
     private int sizeLength;
     private int[] playersInput;
 
-//    private ArrayList<ArrayList<int[]>> linesArrayX = new ArrayList<ArrayList<int[]>>();
-//    private ArrayList<ArrayList<int[]>> columnArrayX = new ArrayList<ArrayList<int[]>>();
-//    private ArrayList<ArrayList<int[]>> diagXMinusOneArrayX = new ArrayList<ArrayList<int[]>>();
-//    private ArrayList<ArrayList<int[]>> diagXPlusOneArraysX = new ArrayList<ArrayList<int[]>>();
-//    private ArrayList<ArrayList<int[]>> linesArrayO = new ArrayList<ArrayList<int[]>>();
-//    private ArrayList<ArrayList<int[]>> columnArrayO = new ArrayList<ArrayList<int[]>>();
-//    private ArrayList<ArrayList<int[]>> diagXMinusOneArrayO = new ArrayList<ArrayList<int[]>>();
-//    private ArrayList<ArrayList<int[]>> diagXPlusOneArraysO = new ArrayList<ArrayList<int[]>>();
     public int turn;
     private Cell[][] cellsBoard;
     Cell cell;
@@ -23,7 +15,7 @@ public class TicTacToe {
     Player activePlayer;
 
 
-    public TicTacToe() {   // Constructeur --> donner un valeur aux attributs
+    public TicTacToe() {
         //Initiate variables
         this.sizeHeight = 3;
         this.sizeLength = 3;
@@ -77,7 +69,6 @@ public class TicTacToe {
     public boolean isBoxFilled(int[] input){
         int inputColumn = input[0];
         int inputLine = input[1];
-//        System.out.println("column :" + inputColumn + " ligne: "+inputLine);
         if(cellsBoard[inputColumn][inputLine].representation == " "){
             return false;
         } else {
@@ -114,7 +105,7 @@ public class TicTacToe {
     private boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
         for(ArrayList<int[]> array : arrayToCheck){
             int[] getTuple = array.get(0);
-            int coordinateToFit = getTuple[coordinateToCheck]; //colonne = [1] & ligne = [0]
+            int coordinateToFit = getTuple[coordinateToCheck];
             if(playersInput[coordinateToCheck] == coordinateToFit){
                 array.add(playersInput);
             }
