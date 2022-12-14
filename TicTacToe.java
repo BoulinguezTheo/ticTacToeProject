@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TicTacToe {
     Player player1;
@@ -34,7 +33,7 @@ public class TicTacToe {
         do {
             int turns = player1.getTurns();
             display();
-            isMoveValid();
+            getValidMove();
             setOwner(playersInput);
             if(isWinner()){
                 endGame = true;
@@ -45,7 +44,7 @@ public class TicTacToe {
 
         } while(!endGame);
     }
-    public void isMoveValid(){
+    public void getValidMove(){
         do {
             playersInput = this.player1.getMoveFromPlayer();
         } while (isBoxFilled(playersInput));
@@ -83,14 +82,10 @@ public class TicTacToe {
     }
     public boolean isWinner(){
         String symbolPlayed = player1.getSymbol();
-        if (treatInputColumnLines(symbolPlayed.equals("X") ? linesArrayX : linesArrayO, 1)
+        return treatInputColumnLines(symbolPlayed.equals("X") ? linesArrayX : linesArrayO, 1)
                 || treatInputColumnLines(symbolPlayed.equals("X") ? columnArrayX : columnArrayO, 0)
                 || treatInputDiags(symbolPlayed.equals("X") ? diagXMinusOneArrayX : diagXMinusOneArrayO, -1)
-                || treatInputDiags(symbolPlayed.equals("X") ? diagXPlusOneArraysX : diagXPlusOneArraysO, 1)){
-            return true;
-        } else {
-            return false;
-        }
+                || treatInputDiags(symbolPlayed.equals("X") ? diagXPlusOneArraysX : diagXPlusOneArraysO, 1);
     }
     private boolean treatInputColumnLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
         if (arrayToCheck.size() == 0){

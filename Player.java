@@ -1,7 +1,6 @@
 import java.util.Scanner;
 
 public class Player {
-    private String representation;
     public static int turn;
     String symbol;
 
@@ -29,12 +28,10 @@ public class Player {
 
     public int[] getMoveFromPlayer() {
         int[] playerEntries;
-        int column, line;
         //Check if box is occupied
         playerEntries = askPlayerInput();
-        column = playerEntries[0];
-        line = playerEntries[1];
         return playerEntries;
+
     }
 
     public int[] askPlayerInput() {
@@ -56,6 +53,7 @@ public class Player {
             validLine = validInputUser(line, "line");
         } while (!validLine);
 
+//        playerInput.close(); //fait bugger
         return new int[]{column, line};
     }
 
@@ -65,9 +63,8 @@ public class Player {
             System.out.println("Error: please try again");
             System.out.print("Enter " + typeInput + ": ");
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 }
 
