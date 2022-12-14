@@ -1,58 +1,84 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TicTacToe {
-    Player player1;
     private final int winCondition = 3;
     private int sizeHeight;
     private int sizeLength;
-    private boolean endGame;
     private int[] playersInput;
-    private String [][] boardArray;
 
-    private ArrayList<ArrayList<int[]>> linesArrayX = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> columnArrayX = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> diagXMinusOneArrayX = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> diagXPlusOneArraysX = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> linesArrayO = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> columnArrayO = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> diagXMinusOneArrayO = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> diagXPlusOneArraysO = new ArrayList<ArrayList<int[]>>();
-    Cell board;
+//    private ArrayList<ArrayList<int[]>> linesArrayX = new ArrayList<ArrayList<int[]>>();
+//    private ArrayList<ArrayList<int[]>> columnArrayX = new ArrayList<ArrayList<int[]>>();
+//    private ArrayList<ArrayList<int[]>> diagXMinusOneArrayX = new ArrayList<ArrayList<int[]>>();
+//    private ArrayList<ArrayList<int[]>> diagXPlusOneArraysX = new ArrayList<ArrayList<int[]>>();
+//    private ArrayList<ArrayList<int[]>> linesArrayO = new ArrayList<ArrayList<int[]>>();
+//    private ArrayList<ArrayList<int[]>> columnArrayO = new ArrayList<ArrayList<int[]>>();
+//    private ArrayList<ArrayList<int[]>> diagXMinusOneArrayO = new ArrayList<ArrayList<int[]>>();
+//    private ArrayList<ArrayList<int[]>> diagXPlusOneArraysO = new ArrayList<ArrayList<int[]>>();
+    public int turn;
+    private Cell[][] cellsBoard;
+    Cell cell;
+    Player player1;
+    Player player2;
+    Player activePlayer;
 
 
     public TicTacToe() {   // Constructeur --> donner un valeur aux attributs
-        board = new Cell();
-        sizeHeight = 3;
-        sizeLength = 3;
-        boardArray = new String[sizeHeight][sizeLength];
-        setupArray();
-        player1 = new Player();
-        play();
+        //Initiate variables
+        this.sizeHeight = 3;
+        this.sizeLength = 3;
+        this.turn = 0;
+        // Initiate Objects
+        this.cell = new Cell();
+        this.cellsBoard = initCells();
+        player1 = new Player("X");
+        player2 = new Player("O");
+        activePlayer = player1;
     }
-    public void play(){
+
+    protected void play(){
         do {
-            int turns = player1.getTurns();
+            this.turn++;
             display();
             getValidMove();
             setOwner(playersInput);
-            if(isWinner()){
-                endGame = true;
-            }
-            if (turns == 8){
-                endGame = true;
-            }
-
-        } while(!endGame);
+            activePlayer = (activePlayer == player1) ? player2 : player1;
+        } while(!isWinner() && this.turn != 9);
+        display();
     }
+
+    private Cell[][] initCells(){
+        Cell[][] cells = new Cell[this.sizeLength][this.sizeHeight];
+        for (int i = 0; i < this.sizeHeight; i++){
+            for (int j = 0; j < this.sizeLength; j++){
+                cells[i][j] = new Cell();
+            }
+        }
+        return cells;
+    }
+
+    public void display() {
+        System.out.println("-------------");
+        for (int i = 0; i < this.sizeLength; i++) {
+            for (int j = 0; j < this.sizeHeight; j++) {
+                System.out.print(this.cellsBoard[i][j].getCell());
+            }
+            System.out.println("|");
+            System.out.println("-------------");
+        }
+    }
+
     public void getValidMove(){
         do {
-            playersInput = this.player1.getMoveFromPlayer();
+            playersInput = this.activePlayer.getMoveFromPlayer();
+//            System.out.println(Arrays.toString(playersInput));
         } while (isBoxFilled(playersInput));
     }
     public boolean isBoxFilled(int[] input){
         int inputColumn = input[0];
         int inputLine = input[1];
-        if(this.boardArray[inputColumn][inputLine] == " "){
+//        System.out.println("column :" + inputColumn + " ligne: "+inputLine);
+        if(cellsBoard[inputColumn][inputLine].representation == " "){
             return false;
         } else {
             System.out.println("Box already filled, please try again");
@@ -60,32 +86,14 @@ public class TicTacToe {
         }
     }
     public void setOwner(int[] input){
-        boardArray[input[0]][input[1]] = this.player1.getRepresentation();
-    }
-    public void display() {
-        for (int j = 0; j < this.sizeHeight; j++) {
-            System.out.println("-------------");
-            for (int i = 0; i < this.sizeLength; i++) {
-                System.out.print(this.board.getRepresentation() + this.boardArray[i][j] + " ");
-            }
-            System.out.print("|");
-            System.out.println("");
-        }
-        System.out.println("-------------");
-    }
-    public void setupArray(){
-        for (int i = 0; i < sizeHeight; i++){
-            for (int j = 0; j < sizeLength; j++){
-                boardArray[i][j] = " ";
-            }
-        }
+        cellsBoard[input[0]][input[1]].representation = activePlayer.symbol;
     }
     public boolean isWinner(){
-        String symbolPlayed = player1.getSymbol();
-        return treatInputColumnLines(symbolPlayed.equals("X") ? linesArrayX : linesArrayO, 1)
-                || treatInputColumnLines(symbolPlayed.equals("X") ? columnArrayX : columnArrayO, 0)
-                || treatInputDiags(symbolPlayed.equals("X") ? diagXMinusOneArrayX : diagXMinusOneArrayO, -1)
-                || treatInputDiags(symbolPlayed.equals("X") ? diagXPlusOneArraysX : diagXPlusOneArraysO, 1);
+        String symbolPlayed = activePlayer.symbol;
+        return treatInputColumnLines(activePlayer.getLineArrays(), 0)
+                || treatInputColumnLines(activePlayer.getColumnArrays(), 1)
+                || treatInputDiags(activePlayer.diagXMinusOneArrays(), -1)
+                || treatInputDiags(activePlayer.diagXPlusOneArrays(), 1);
     }
     private boolean treatInputColumnLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
         if (arrayToCheck.size() == 0){
@@ -110,6 +118,7 @@ public class TicTacToe {
             if(playersInput[coordinateToCheck] == coordinateToFit){
                 array.add(playersInput);
             }
+            System.out.println(array.size());
             if (array.size() == this.winCondition){
                 return true;
             }
@@ -117,12 +126,13 @@ public class TicTacToe {
         return false;
     }
     private boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign){
+        System.out.println("test diags");
         int x = playersInput[0];
         int y = playersInput[1];
         for(ArrayList<int[]> array : arrayToCheck){
             int[] getTuple = array.get(0);
             int coordinateToFitX = (x - getTuple[0]);
-            int coordinateToFitY = sign * (y - getTuple[1]);
+            int coordinateToFitY = sign * (y - getTuple[0]);
             if(coordinateToFitX == coordinateToFitY){
                 array.add(playersInput);
             }

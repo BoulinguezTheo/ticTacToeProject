@@ -1,31 +1,21 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
+    private ArrayList<ArrayList<int[]>> lineArrays = new ArrayList<ArrayList<int[]>>();
+    private ArrayList<ArrayList<int[]>> columnArrays = new ArrayList<ArrayList<int[]>>();
+    private ArrayList<ArrayList<int[]>> diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
+    private ArrayList<ArrayList<int[]>> diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
     public static int turn;
     String symbol;
 
-
-    Player() {
-        turn = 0;
+    public Player (){
+        this.turn = 0;
     }
-
-    public int getTurns(){
-        return this.turn;
+    public Player(String pSymbol) {
+        this.turn = 0;
+        this.symbol = pSymbol;
     }
-
-    public String getRepresentation() {
-        turn++;
-        if (turn % 2 != 0) {
-            symbol = "X";
-        } else {
-            symbol = "O";
-        }
-        return symbol;
-    }
-    public String getSymbol(){
-        return this.symbol;
-    }
-
     public int[] getMoveFromPlayer() {
         int[] playerEntries;
         //Check if box is occupied
@@ -33,7 +23,6 @@ public class Player {
         return playerEntries;
 
     }
-
     public int[] askPlayerInput() {
         boolean validColumn, validLine;
         Scanner playerInput = new Scanner(System.in);
@@ -43,7 +32,7 @@ public class Player {
         do {
             column = playerInput.nextInt();
 //            System.out.println(column.getClass().getName());
-            validColumn = validInputUser(column, "column");
+            validColumn = validInputUser(column, "Column");
         } while (!validColumn);
 
         //Check if line input is valid
@@ -54,7 +43,7 @@ public class Player {
         } while (!validLine);
 
 //        playerInput.close(); //fait bugger
-        return new int[]{column, line};
+        return new int[]{line, column};
     }
 
     public boolean validInputUser(int input, String typeInput) {
@@ -65,6 +54,21 @@ public class Player {
             return false;
         }
         return true;
+    }
+    public String getSymbol(){
+        return this.symbol;
+    }
+    public ArrayList<ArrayList<int[]>> getLineArrays(){
+        return lineArrays;
+    }
+    public ArrayList<ArrayList<int[]>> getColumnArrays(){
+        return columnArrays;
+    }
+    public ArrayList<ArrayList<int[]>> diagXMinusOneArrays(){
+        return diagXMinusOneArrays;
+    }
+    public ArrayList<ArrayList<int[]>> diagXPlusOneArrays(){
+        return diagXPlusOneArrays;
     }
 }
 
