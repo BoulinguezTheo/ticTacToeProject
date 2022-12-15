@@ -37,7 +37,7 @@ public class HumanPlayer extends Player{
             validLine = super.validInputUser(line, "line");
         } while (!validLine);
 
-//        playerInput.close(); //fait bugger
+        //playerInput.close(); //fait bugger
         return new int[]{column, line};
     }
 

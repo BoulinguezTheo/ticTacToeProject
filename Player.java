@@ -43,8 +43,8 @@ public abstract class Player {
             line = playerInput.nextInt();
             validLine = validInputUser(line, "line");
         } while (!validLine);
-
-//        playerInput.close(); //fait bugger
+        
+       // playerInput.close(); //fait bugger
         return new int[]{column, line};
     }
 

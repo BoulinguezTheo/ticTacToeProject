@@ -28,7 +28,7 @@ public class TicTacToe {
         this.cellsBoard = initCells();
             //Setup players;
         player1 = setupPlayers("X", "1st");
-        player2 =setupPlayers("O", "2nd");
+        player2 = setupPlayers("O", "2nd");
         // player1 = new ArtificialPlayer("X");
         // player2 = new ArtificialPlayer("O");
         activePlayer = player1;
@@ -40,7 +40,8 @@ public class TicTacToe {
         System.out.println("-Press 2 for an artificial player");
         System.out.print("Setup " + playerNth +" player: ");
         int player = playerScanner.nextInt();
-        return (player == 1) ? new HumanPlayer("X") : new ArtificialPlayer(symbol);
+        //playerScanner.close();
+        return (player == 1) ? new HumanPlayer("symbol") : new ArtificialPlayer(symbol);
     }
 
     protected void play(){
