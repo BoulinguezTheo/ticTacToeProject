@@ -26,12 +26,9 @@ public class TicTacToe {
         // Initiate Objects
         this.cell = new Cell();
         this.cellsBoard = initCells();
-
-        //Setup players;
-        Scanner playerScanner = new Scanner(System.in);
+            //Setup players;
         player1 = setupPlayers("X", "1st");
         player2 =setupPlayers("O", "2nd");
-        
         // player1 = new ArtificialPlayer("X");
         // player2 = new ArtificialPlayer("O");
         activePlayer = player1;
