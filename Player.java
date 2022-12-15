@@ -2,27 +2,19 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Player {
-    private ArrayList<ArrayList<int[]>> lineArrays;
-    private ArrayList<ArrayList<int[]>> columnArrays;
-    private ArrayList<ArrayList<int[]>> diagXMinusOneArrays;
-    private ArrayList<ArrayList<int[]>> diagXPlusOneArrays;
     public static int turn;
     String symbol;
 
     public Player (){
         this.turn = 0;
-        lineArrays = new ArrayList<ArrayList<int[]>>();
-        columnArrays = new ArrayList<ArrayList<int[]>>();
-        diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
-        diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
+
+
+
+
     }
     public Player(String pSymbol) {
         this.turn = 0;
         this.symbol = pSymbol;
-        lineArrays = new ArrayList<ArrayList<int[]>>();
-        columnArrays = new ArrayList<ArrayList<int[]>>();
-        diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
-        diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
     }
     public int[] getMoveFromPlayer() {
         int[] playerEntries;
@@ -66,17 +58,17 @@ public class Player {
     public String getSymbol(){
         return this.symbol;
     }
-    public ArrayList<ArrayList<int[]>> getLineArrays(){
-        return lineArrays;
-    }
-    public ArrayList<ArrayList<int[]>> getColumnArrays(){
-        return columnArrays;
-    }
-    public ArrayList<ArrayList<int[]>> diagXMinusOneArrays(){
-        return diagXMinusOneArrays;
-    }
-    public ArrayList<ArrayList<int[]>> diagXPlusOneArrays(){
-        return diagXPlusOneArrays;
-    }
+//    public ArrayList<ArrayList<int[]>> getLineArrays(){
+//        return lineArrays;
+//    }
+//    public ArrayList<ArrayList<int[]>> getColumnArrays(){
+//        return columnArrays;
+//    }
+//    public ArrayList<ArrayList<int[]>> diagXMinusOneArrays(){
+//        return diagXMinusOneArrays;
+//    }
+//    public ArrayList<ArrayList<int[]>> diagXPlusOneArrays(){
+//        return diagXPlusOneArrays;
+//    }
 }
 

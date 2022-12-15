@@ -2,6 +2,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TicTacToe {
+    private ArrayList<ArrayList<int[]>> lineArraysX = new ArrayList<ArrayList<int[]>>();
+    private ArrayList<ArrayList<int[]>> columnArraysX = new ArrayList<ArrayList<int[]>>();
+    private ArrayList<ArrayList<int[]>> diagXMinusOneArraysX = new ArrayList<ArrayList<int[]>>();
+    private ArrayList<ArrayList<int[]>> diagXPlusOneArraysX = new ArrayList<ArrayList<int[]>>();
+    private ArrayList<ArrayList<int[]>> lineArraysO = new ArrayList<ArrayList<int[]>>();
+    private ArrayList<ArrayList<int[]>> columnArraysO = new ArrayList<ArrayList<int[]>>();
+    private ArrayList<ArrayList<int[]>> diagXMinusOneArraysO = new ArrayList<ArrayList<int[]>>();
+    private ArrayList<ArrayList<int[]>> diagXPlusOneArraysO = new ArrayList<ArrayList<int[]>>();
     private final int winCondition = 3;
     private int sizeHeight;
     private int sizeLength;
@@ -81,10 +89,10 @@ public class TicTacToe {
     }
     public boolean isWinner(){
         String symbolPlayed = activePlayer.symbol;
-        return treatInputColumnLines(activePlayer.getLineArrays(), 0)
-                || treatInputColumnLines(activePlayer.getColumnArrays(), 1)
-                || treatInputDiags(activePlayer.diagXMinusOneArrays(), -1)
-                || treatInputDiags(activePlayer.diagXPlusOneArrays(), 1);
+        return treatInputColumnLines((symbolPlayed.equals('X')) ? lineArraysX : lineArraysO , 0)
+                || treatInputColumnLines((symbolPlayed.equals('X')) ? columnArraysX : columnArraysO, 1)
+                || treatInputDiags((symbolPlayed.equals('X')) ? diagXMinusOneArraysX : diagXMinusOneArraysO, -1)
+                || treatInputDiags((symbolPlayed.equals('X')) ? diagXPlusOneArraysX : diagXPlusOneArraysO, 1);
     }
     private boolean treatInputColumnLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
         if (arrayToCheck.size() == 0){
