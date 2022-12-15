@@ -2,6 +2,7 @@ import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class TicTacToe {
     private final int winCondition = 3;
@@ -25,9 +26,24 @@ public class TicTacToe {
         // Initiate Objects
         this.cell = new Cell();
         this.cellsBoard = initCells();
-        player1 = new ArtificialPlayer("X");
-        player2 = new ArtificialPlayer("O");
+
+        //Setup players;
+        Scanner playerScanner = new Scanner(System.in);
+        player1 = setupPlayers("X", "1st");
+        player2 =setupPlayers("O", "2nd");
+        
+        // player1 = new ArtificialPlayer("X");
+        // player2 = new ArtificialPlayer("O");
         activePlayer = player1;
+    }
+
+    private Player setupPlayers(String symbol, String playerNth){
+        Scanner playerScanner = new Scanner(System.in);
+        System.out.println("-Press 1 for a human player");
+        System.out.println("-Press 2 for an artificial player");
+        System.out.print("Setup " + playerNth +" player: ");
+        int player = playerScanner.nextInt();
+        return (player == 1) ? new HumanPlayer("X") : new ArtificialPlayer(symbol);
     }
 
     protected void play(){
