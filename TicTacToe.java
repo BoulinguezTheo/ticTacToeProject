@@ -1,15 +1,9 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class TicTacToe {
-    private ArrayList<ArrayList<int[]>> lineArraysX = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> columnArraysX = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> diagXMinusOneArraysX = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> diagXPlusOneArraysX = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> lineArraysO = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> columnArraysO = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> diagXMinusOneArraysO = new ArrayList<ArrayList<int[]>>();
-    private ArrayList<ArrayList<int[]>> diagXPlusOneArraysO = new ArrayList<ArrayList<int[]>>();
     private final int winCondition = 3;
     private int sizeHeight;
     private int sizeLength;
@@ -31,8 +25,8 @@ public class TicTacToe {
         // Initiate Objects
         this.cell = new Cell();
         this.cellsBoard = initCells();
-        player1 = new Player("X");
-        player2 = new Player("O");
+        player1 = new ArtificialPlayer("X");
+        player2 = new ArtificialPlayer("O");
         activePlayer = player1;
     }
 
@@ -75,24 +69,27 @@ public class TicTacToe {
         } while (isBoxFilled(playersInput));
     }
     public boolean isBoxFilled(int[] input){
-        int inputColumn = input[0];
-        int inputLine = input[1];
+        int inputColumn = input[1];
+        int inputLine = input[0];
         if(cellsBoard[inputColumn][inputLine].representation == " "){
             return false;
         } else {
-            System.out.println("Box already filled, please try again");
+            if (activePlayer.getType().equals("Human")){
+                System.out.println("Box already filled, please try again");
+            }
             return true;
         }
     }
     public void setOwner(int[] input){
-        cellsBoard[input[0]][input[1]].representation = activePlayer.symbol;
+        cellsBoard[input[1]][input[0]].representation = activePlayer.getSymbol();
+
     }
     public boolean isWinner(){
         String symbolPlayed = activePlayer.symbol;
-        return treatInputColumnLines((symbolPlayed.equals('X')) ? lineArraysX : lineArraysO , 0)
-                || treatInputColumnLines((symbolPlayed.equals('X')) ? columnArraysX : columnArraysO, 1)
-                || treatInputDiags((symbolPlayed.equals('X')) ? diagXMinusOneArraysX : diagXMinusOneArraysO, -1)
-                || treatInputDiags((symbolPlayed.equals('X')) ? diagXPlusOneArraysX : diagXPlusOneArraysO, 1);
+        return treatInputColumnLines(activePlayer.getLineArrays(), 0)
+                || treatInputColumnLines(activePlayer.getColumnArrays(), 1)
+                || treatInputDiags(activePlayer.diagXMinusOneArrays(), -1)
+                || treatInputDiags(activePlayer.diagXPlusOneArrays(), 1);
     }
     private boolean treatInputColumnLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
         if (arrayToCheck.size() == 0){
@@ -111,33 +108,42 @@ public class TicTacToe {
         }
     }
     private boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
+        boolean entered = false;
         for(ArrayList<int[]> array : arrayToCheck){
             int[] getTuple = array.get(0);
             int coordinateToFit = getTuple[coordinateToCheck];
             if(playersInput[coordinateToCheck] == coordinateToFit){
                 array.add(playersInput);
+                entered = true;
             }
-            System.out.println(array.size());
             if (array.size() == this.winCondition){
+                System.out.println("win cl");
                 return true;
             }
+        }
+        if (!entered){
+            createNewArrayOfCoordinates(arrayToCheck);
         }
         return false;
     }
     private boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign){
-        System.out.println("test diags");
         int x = playersInput[0];
         int y = playersInput[1];
+        boolean entered = false;
         for(ArrayList<int[]> array : arrayToCheck){
             int[] getTuple = array.get(0);
             int coordinateToFitX = (x - getTuple[0]);
-            int coordinateToFitY = sign * (y - getTuple[0]);
+            int coordinateToFitY = sign * (y - getTuple[1]);
             if(coordinateToFitX == coordinateToFitY){
                 array.add(playersInput);
             }
             if (array.size() == this.winCondition){
+                System.out.println("win diag");
                 return true;
             }
+        }
+        if (!entered){
+            createNewArrayOfCoordinates(arrayToCheck);
         }
         return false;
     }
