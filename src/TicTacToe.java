@@ -13,6 +13,7 @@ public class TicTacToe {
     private int[] playersInput;
 
     public int turn;
+    private boolean again;
     private Cell[][] cellsBoard;
     Cell cell;
     UserInteraction interaction;
@@ -41,6 +42,13 @@ public class TicTacToe {
     }
 
     protected void play(){
+        do {
+            playGame();
+            again = this.interaction.playAgain();
+        }while(again);
+    }
+
+    protected void playGame(){
         do {
             this.turn++;
             activePlayer = (activePlayer == player1) ? player2 : player1;

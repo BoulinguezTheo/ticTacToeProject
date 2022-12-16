@@ -42,4 +42,8 @@ public class View {
   protected void displayInputError(){
     System.out.println("Error: please try again");
   }
+
+  protected void displayAskNewGame(){
+    System.out.println("Do you want to play again? (Y / N)");
+  }
 }
