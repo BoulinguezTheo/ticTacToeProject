@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class UserInteraction {
     Scanner setupPlayersScanner;
     Scanner moveScanner;
+    //Can I set 1 scanner for both ?
     View printRequests;
 
     public UserInteraction(){
@@ -21,5 +22,6 @@ public class UserInteraction {
     protected int askPlayerMove(String coordinate){
         this.printRequests.playerMoveChoice(coordinate);
         return moveScanner.nextInt();
+        //Need close scanner but don't know where
     }
 }
