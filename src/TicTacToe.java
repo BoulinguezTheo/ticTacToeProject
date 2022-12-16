@@ -133,7 +133,6 @@ public class TicTacToe {
                 entered = true;
             }
             if (array.size() == this.winCondition){
-                System.out.println("win cl");
                 return true;
             }
         }
@@ -154,7 +153,6 @@ public class TicTacToe {
                 array.add(playersInput);
             }
             if (array.size() == this.winCondition){
-                System.out.println("win diag");
                 return true;
             }
         }
