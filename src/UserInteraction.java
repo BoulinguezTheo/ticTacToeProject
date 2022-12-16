@@ -13,15 +13,18 @@ public class UserInteraction {
         printRequests = new View();
     }
     protected Player setupPlayers(String playerNth, String pSymbol){
-        this.printRequests.playersTypeChoice(playerNth, pSymbol);
-        int player = this.setupPlayersScanner.nextInt();
+        String player;
+        do {
+            this.printRequests.playersTypeChoice(playerNth, pSymbol);
+            player = this.setupPlayersScanner.nextLine();
+        }while (!player.equals("1") && !player.equals("2"));
         //Need close scanner but don't know where
-        return (player == 1) ? new HumanPlayer(pSymbol) : new ArtificialPlayer(pSymbol);
+        return (player.equals("1")) ? new HumanPlayer(pSymbol) : new ArtificialPlayer(pSymbol);
     }
 
-    protected int askPlayerMove(String coordinate){
+    protected String askPlayerMove(String coordinate){
         this.printRequests.playerMoveChoice(coordinate);
-        return moveScanner.nextInt();
+        return moveScanner.nextLine();
         //Need close scanner but don't know where
     }
 }

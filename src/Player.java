@@ -10,6 +10,7 @@ public abstract class Player {
     private ArrayList<ArrayList<int[]>> diagXPlusOneArrays;
 
     UserInteraction interaction;
+    View printer = new View();
     public static int turn;
     String symbol;
 
@@ -33,7 +34,7 @@ public abstract class Player {
     protected abstract int[] getMoveFromPlayer();
     public int[] askPlayerInput() {
         boolean validColumn, validLine;
-        int column, line;
+        String column, line;
 
         //Check if column input is valid
         do {
@@ -46,14 +47,14 @@ public abstract class Player {
             line = interaction.askPlayerMove("line");
             validLine = validInputUser(line, "line");
         } while (!validLine);
-        return new int[]{column, line};
+
+        return new int[]{Integer.parseInt(column), Integer.parseInt(line)};
     }
 
-    public boolean validInputUser(int input, String typeInput) {
+    public boolean validInputUser(String input, String typeInput) {
         //Check if the input is valid
-        if (input != 0 && input != 1 && input != 2) {
-            System.out.println("Error: please try again");
-            System.out.print("Enter " + typeInput + ": ");
+        if (!input.equals("0") && !input.equals("1") && !input.equals("2")) {
+            this.printer.displayInputError();
             return false;
         }
         return true;

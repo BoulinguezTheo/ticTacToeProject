@@ -37,18 +37,18 @@ public class TicTacToe {
         player2 = interaction.setupPlayers("2nd", "O");
         // player1 = new ArtificialPlayer("X");
         // player2 = new ArtificialPlayer("O");
-        activePlayer = player1;
+
     }
 
     protected void play(){
         do {
             this.turn++;
+            activePlayer = (activePlayer == player1) ? player2 : player1;
             this.printer.display(this.sizeLength, this.sizeHeight, this.cellsBoard);
             getValidMove();
             setOwner(playersInput);
-            activePlayer = (activePlayer == player1) ? player2 : player1;
         } while(!isWinner() && this.turn != 9);
-        this.printer.display(this.sizeLength, this.sizeHeight, this.cellsBoard);
+
 
     }
 
@@ -63,6 +63,7 @@ public class TicTacToe {
     }
 
     public void getValidMove(){
+        this.printer.displayPlayerTurn(activePlayer.getSymbol());
         do {
             playersInput = this.activePlayer.getMoveFromPlayer();
         } while (isBoxFilled(playersInput));
@@ -84,7 +85,6 @@ public class TicTacToe {
 
     }
     public boolean isWinner(){
-        String symbolPlayed = activePlayer.symbol;
         return treatInputColumnLines(activePlayer.getLineArrays(), 0)
                 || treatInputColumnLines(activePlayer.getColumnArrays(), 1)
                 || treatInputDiags(activePlayer.diagXMinusOneArrays(), -1)
@@ -116,12 +116,15 @@ public class TicTacToe {
                 entered = true;
             }
             if (array.size() == this.winCondition){
+                this.printer.display(this.sizeLength, this.sizeHeight, this.cellsBoard);
+                this.printer.displayerWinner(this.activePlayer.getSymbol());
                 return true;
             }
         }
         if (!entered){
             createNewArrayOfCoordinates(arrayToCheck);
         }
+
         return false;
     }
     private boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign){
@@ -136,12 +139,15 @@ public class TicTacToe {
                 array.add(playersInput);
             }
             if (array.size() == this.winCondition){
+                this.printer.display(this.sizeLength, this.sizeHeight, this.cellsBoard);
+                this.printer.displayerWinner(this.activePlayer.getSymbol());
                 return true;
             }
         }
         if (!entered){
             createNewArrayOfCoordinates(arrayToCheck);
         }
+
         return false;
     }
     private void createNewArrayOfCoordinates(ArrayList<ArrayList<int[]>> arrayToCheck){
