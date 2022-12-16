@@ -1,3 +1,5 @@
+package src;
+
 public class Cell {
     private final String LeftPart;
     private final String RightPart;
