@@ -8,6 +8,8 @@ public abstract class Player {
     private ArrayList<ArrayList<int[]>> columnArrays;
     private ArrayList<ArrayList<int[]>> diagXMinusOneArrays;
     private ArrayList<ArrayList<int[]>> diagXPlusOneArrays;
+
+    UserInteraction interaction;
     public static int turn;
     String symbol;
 
@@ -17,6 +19,7 @@ public abstract class Player {
         columnArrays = new ArrayList<ArrayList<int[]>>();
         diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
         diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
+        interaction = new UserInteraction();
     }
     public Player(String pSymbol) {
         this.turn = 0;
@@ -25,28 +28,25 @@ public abstract class Player {
         ArrayList<ArrayList<int[]>>columnArrays = new ArrayList<ArrayList<int[]>>();
         ArrayList<ArrayList<int[]>>diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
         ArrayList<ArrayList<int[]>>diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
+        interaction = new UserInteraction();
     }
     protected abstract int[] getMoveFromPlayer();
     public int[] askPlayerInput() {
         boolean validColumn, validLine;
-        Scanner playerInput = new Scanner(System.in);
         int column, line;
+
         //Check if column input is valid
-        System.out.print("Enter column: ");
         do {
-            column = playerInput.nextInt();
+            column = interaction.askPlayerMove("column");
 //            System.out.println(column.getClass().getName());
-            validColumn = validInputUser(column, "Column");
+            validColumn = validInputUser(column, "column");
         } while (!validColumn);
 
         //Check if line input is valid
-        System.out.print("Enter line: ");
         do {
-            line = playerInput.nextInt();
+            line = interaction.askPlayerMove("line");
             validLine = validInputUser(line, "line");
         } while (!validLine);
-        
-       // playerInput.close(); //fait bugger
         return new int[]{column, line};
     }
 

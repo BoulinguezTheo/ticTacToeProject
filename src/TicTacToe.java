@@ -18,6 +18,7 @@ public class TicTacToe {
     Player player1;
     Player player2;
     Player activePlayer;
+    UserInteraction interaction;
 
 
     public TicTacToe() {
@@ -28,22 +29,13 @@ public class TicTacToe {
         // Initiate Objects
         this.cell = new Cell();
         this.cellsBoard = initCells();
+        this.interaction = new UserInteraction();
             //Setup players;
-        player1 = setupPlayers("X", "1st");
-        player2 = setupPlayers("O", "2nd");
+        player1 = interaction.setupPlayers("1st", "X");
+        player2 = interaction.setupPlayers("2nd", "O");
         // player1 = new ArtificialPlayer("X");
         // player2 = new ArtificialPlayer("O");
         activePlayer = player1;
-    }
-
-    private Player setupPlayers(String symbol, String playerNth){
-        Scanner playerScanner = new Scanner(System.in);
-        System.out.println("-Press 1 for a human player");
-        System.out.println("-Press 2 for an artificial player");
-        System.out.print("Setup " + playerNth +" player: ");
-        int player = playerScanner.nextInt();
-        //playerScanner.close();
-        return (player == 1) ? new HumanPlayer("symbol") : new ArtificialPlayer(symbol);
     }
 
     protected void play(){
@@ -55,6 +47,7 @@ public class TicTacToe {
             activePlayer = (activePlayer == player1) ? player2 : player1;
         } while(!isWinner() && this.turn != 9);
         display();
+        
     }
 
     private Cell[][] initCells(){
