@@ -20,29 +20,6 @@ public class HumanPlayer extends Player{
         return playerEntries;
     }
 
-    @Override
-    public int[] askPlayerInput() {
-        boolean validColumn, validLine;
-        Scanner playerInput = new Scanner(System.in);
-        int column, line;
-        //Check if column input is valid
-        System.out.print("Enter column: ");
-        do {
-            column = playerInput.nextInt();
-            validColumn = super.validInputUser(column, "Column");
-        } while (!validColumn);
-
-        //Check if line input is valid
-        System.out.print("Enter line: ");
-        do {
-            line = playerInput.nextInt();
-            validLine = super.validInputUser(line, "line");
-        } while (!validLine);
-
-        //playerInput.close(); //fait bugger
-        return new int[]{column, line};
-    }
-
     public String getSymbol(){
         return this.symbol;
     }

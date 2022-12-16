@@ -4,22 +4,22 @@ import java.util.Scanner;
 public class UserInteraction {
     Scanner setupPlayersScanner;
     Scanner moveScanner;
+    View printRequests;
 
     public UserInteraction(){
         setupPlayersScanner = new Scanner(System.in);
         moveScanner = new Scanner(System.in);
+        printRequests = new View();
     }
     protected Player setupPlayers(String playerNth, String pSymbol){
-        System.out.println("-Press 1 for a human player");
-        System.out.println("-Press 2 for an artificial player");
-        System.out.print("Setup " + playerNth +" player: ");
+        this.printRequests.playersTypeChoice(playerNth, pSymbol);
         int player = this.setupPlayersScanner.nextInt();
-//        setupPlayersScanner.close(); //BUG: CLOSE PROGRAM
+        //Need close scanner but don't know where
         return (player == 1) ? new HumanPlayer(pSymbol) : new ArtificialPlayer(pSymbol);
     }
 
     protected int askPlayerMove(String coordinate){
-        System.out.print("Enter" + coordinate + ": ");
+        this.printRequests.playerMoveChoice(coordinate);
         return moveScanner.nextInt();
     }
 }

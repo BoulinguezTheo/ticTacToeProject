@@ -15,10 +15,11 @@ public class TicTacToe {
     public int turn;
     private Cell[][] cellsBoard;
     Cell cell;
+    UserInteraction interaction;
+    View printer;
     Player player1;
     Player player2;
     Player activePlayer;
-    UserInteraction interaction;
 
 
     public TicTacToe() {
@@ -30,6 +31,7 @@ public class TicTacToe {
         this.cell = new Cell();
         this.cellsBoard = initCells();
         this.interaction = new UserInteraction();
+        this.printer = new View();
             //Setup players;
         player1 = interaction.setupPlayers("1st", "X");
         player2 = interaction.setupPlayers("2nd", "O");
@@ -41,13 +43,13 @@ public class TicTacToe {
     protected void play(){
         do {
             this.turn++;
-            display();
+            this.printer.display(this.sizeLength, this.sizeHeight, this.cellsBoard);
             getValidMove();
             setOwner(playersInput);
             activePlayer = (activePlayer == player1) ? player2 : player1;
         } while(!isWinner() && this.turn != 9);
-        display();
-        
+        this.printer.display(this.sizeLength, this.sizeHeight, this.cellsBoard);
+
     }
 
     private Cell[][] initCells(){
@@ -60,21 +62,9 @@ public class TicTacToe {
         return cells;
     }
 
-    public void display() {
-        System.out.println("-------------");
-        for (int i = 0; i < this.sizeLength; i++) {
-            for (int j = 0; j < this.sizeHeight; j++) {
-                System.out.print(this.cellsBoard[i][j].getCell());
-            }
-            System.out.println("|");
-            System.out.println("-------------");
-        }
-    }
-
     public void getValidMove(){
         do {
             playersInput = this.activePlayer.getMoveFromPlayer();
-//            System.out.println(Arrays.toString(playersInput));
         } while (isBoxFilled(playersInput));
     }
     public boolean isBoxFilled(int[] input){
@@ -84,7 +74,7 @@ public class TicTacToe {
             return false;
         } else {
             if (activePlayer.getType().equals("Human")){
-                System.out.println("Box already filled, please try again");
+                this.printer.boxIsFilled();
             }
             return true;
         }

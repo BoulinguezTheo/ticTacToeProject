@@ -38,7 +38,6 @@ public abstract class Player {
         //Check if column input is valid
         do {
             column = interaction.askPlayerMove("column");
-//            System.out.println(column.getClass().getName());
             validColumn = validInputUser(column, "column");
         } while (!validColumn);
 
