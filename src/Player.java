@@ -9,8 +9,8 @@ public abstract class Player {
     private ArrayList<ArrayList<int[]>> diagXMinusOneArrays;
     private ArrayList<ArrayList<int[]>> diagXPlusOneArrays;
 
-    UserInteraction interaction;
-    View printer = new View();
+    // UserInteraction interaction;
+    // View printer = new View();
     public static int turn;
     String symbol;
 
@@ -20,7 +20,7 @@ public abstract class Player {
         columnArrays = new ArrayList<ArrayList<int[]>>();
         diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
         diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
-        interaction = new UserInteraction();
+        // interaction = new UserInteraction();
     }
     public Player(String pSymbol) {
         this.turn = 0;
@@ -29,35 +29,35 @@ public abstract class Player {
         ArrayList<ArrayList<int[]>>columnArrays = new ArrayList<ArrayList<int[]>>();
         ArrayList<ArrayList<int[]>>diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
         ArrayList<ArrayList<int[]>>diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
-        interaction = new UserInteraction();
+        // interaction = new UserInteraction();
     }
-    protected abstract int[] getMoveFromPlayer();
-    public int[] askPlayerInput() {
+    protected abstract int[] getMoveFromPlayer(UserInteraction interactor);
+    public int[] askPlayerInput(UserInteraction interactor) {
         boolean validColumn, validLine;
         String column, line;
 
         //Check if column input is valid
         do {
-            column = interaction.askPlayerMove("column");
-            validColumn = validInputUser(column, "column");
+            column = interactor.askPlayerMove("column");
+            validColumn = validInputUser(column, "column", interactor);
         } while (!validColumn);
 
         //Check if line input is valid
         do {
-            line = interaction.askPlayerMove("line");
-            validLine = validInputUser(line, "line");
+            line = interactor.askPlayerMove("line");
+            validLine = validInputUser(line, "line", interactor);
         } while (!validLine);
 
         return new int[]{Integer.parseInt(column), Integer.parseInt(line)};
     }
 
-    public boolean validInputUser(String input, String typeInput) {
+    public boolean  validInputUser(String input, String typeInput, UserInteraction interactor ) {
         //Check if the input is valid
         if (!input.equals("0") && !input.equals("1") && !input.equals("2")) {
-            this.printer.displayInputError();
+            interactor.getDisplayInputError(); 
             return false;
         }
-        return true;
+        return true; 
     }
     public String getSymbol(){
         return this.symbol;

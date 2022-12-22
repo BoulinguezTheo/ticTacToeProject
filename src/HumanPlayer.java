@@ -4,19 +4,20 @@ import java.util.Scanner;
 
 public class HumanPlayer extends Player{
     private String symbol;
+    final protected String type = "Human";
 
     public HumanPlayer(String pSymbol){
         this.symbol = pSymbol;
     }
     @Override
     protected String getType(){
-        return "Human";
+        return this.type ;
     }
 
     @Override
-    public int[] getMoveFromPlayer() {
+    public int[] getMoveFromPlayer(UserInteraction interactor) {
         //Check if box is occupied
-        int [] playerEntries = askPlayerInput();
+        int [] playerEntries = askPlayerInput(interactor);
         return playerEntries;
     }
 

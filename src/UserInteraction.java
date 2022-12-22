@@ -31,6 +31,14 @@ public class UserInteraction {
         //Need close scanner but don't know where
     }
 
+    protected void getDisplayInputError(){
+        this.printRequests.displayInputError();
+    }
+
+    protected void getDisplayBoxIsFilled(){
+        this.printRequests.boxIsFilled();
+    }
+
     protected boolean playAgain(){
         boolean correctEntry = false;
         String otherGame;

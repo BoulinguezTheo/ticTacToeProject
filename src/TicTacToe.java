@@ -12,8 +12,6 @@ public class TicTacToe extends BoardGame{
     private int sizeLength;
     private int[] playersInput;
     // private boolean again;
-    // UserInteraction interaction;
-    View printer;
     Player activePlayer;
 
 
@@ -47,7 +45,7 @@ public class TicTacToe extends BoardGame{
         do {
             super.turns++;
             activePlayer = (activePlayer == player1) ? player2 : player1;
-            this.printer.display(this.sizeLength, this.sizeHeight, super.boardGame);
+            super.printer.displayBoard(this.sizeLength, this.sizeHeight, super.boardGame);
             getValidMove();
             setOwner(playersInput);
         } while(!isWinner() && super.turns != 9);
@@ -64,98 +62,78 @@ public class TicTacToe extends BoardGame{
         }
         return cells;
     }
-
+ 
     public void getValidMove(){
-        this.printer.displayPlayerTurn(activePlayer.getSymbol());
+        super.printer.displayPlayerTurn(activePlayer.getSymbol());
         do {
-            playersInput = this.activePlayer.getMoveFromPlayer();
+            playersInput = this.activePlayer.getMoveFromPlayer(interaction);
         } while (isBoxFilled(playersInput));
     }
-    public boolean isBoxFilled(int[] input){
+    public boolean  isBoxFilled(int[] input){
         int inputColumn = input[1];
         int inputLine = input[0];
         if(super.boardGame[inputColumn][inputLine].representation == " "){
             return false;
         } else {
             if (activePlayer.getType().equals("Human")){
-                this.printer.boxIsFilled();
+                this.interaction.getDisplayBoxIsFilled(); 
             }
             return true;
         }
     }
     public void setOwner(int[] input){
         super.boardGame[input[1]][input[0]].representation = activePlayer.getSymbol();
-
     }
     public boolean isWinner(){
-        return treatInputColumnLines(activePlayer.getLineArrays(), 0)
-                || treatInputColumnLines(activePlayer.getColumnArrays(), 1)
-                || treatInputDiags(activePlayer.diagXMinusOneArrays(), -1)
-                || treatInputDiags(activePlayer.diagXPlusOneArrays(), 1);
+        return super.processInputColumnLines(activePlayer.getLineArrays(), 0, playersInput)
+                || super.processInputColumnLines(activePlayer.getColumnArrays(), 1, playersInput)
+                || super.processInputDiags(activePlayer.diagXMinusOneArrays(), -1, playersInput)
+                || super.processInputDiags(activePlayer.diagXPlusOneArrays(), 1, playersInput);
     }
-    private boolean treatInputColumnLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
-        if (arrayToCheck.size() == 0){
-            createNewArrayOfCoordinates(arrayToCheck);
-            return false;
-        } else {
-            return checkIfGameWonColumnAndLines(arrayToCheck,coordinateToCheck);
-        }
-    }
-    private boolean treatInputDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign){
-        if (arrayToCheck.size() == 0){
-            createNewArrayOfCoordinates(arrayToCheck);
-            return false;
-        } else {
-            return checkIfGameWonDiags(arrayToCheck, sign);
-        }
-    }
-    private boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
-        boolean entered = false;
-        for(ArrayList<int[]> array : arrayToCheck){
-            int[] getTuple = array.get(0);
-            int coordinateToFit = getTuple[coordinateToCheck];
-            if(playersInput[coordinateToCheck] == coordinateToFit){
-                array.add(playersInput);
-                entered = true;
-            }
-            if (array.size() == this.winCondition){
-                this.printer.display(this.sizeLength, this.sizeHeight, super.boardGame);
-                this.printer.displayerWinner(this.activePlayer.getSymbol());
-                return true;
-            }
-        }
-        if (!entered){
-            createNewArrayOfCoordinates(arrayToCheck);
-        }
+   
+    // private boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
+    //     boolean entered = false;
+    //     for(ArrayList<int[]> array : arrayToCheck){
+    //         int[] getTuple = array.get(0);
+    //         int coordinateToFit = getTuple[coordinateToCheck];
+    //         if(playersInput[coordinateToCheck] == coordinateToFit){
+    //             array.add(playersInput);
+    //             entered = true;
+    //         }
+    //         if (array.size() == this.winCondition){
+    //             this.printer.display(this.sizeLength, this.sizeHeight, super.boardGame);
+    //             this.printer.displayerWinner(this.activePlayer.getSymbol());
+    //             return true;
+    //         }
+    //     }
+    //     if (!entered){
+    //         createNewArrayOfCoordinates(arrayToCheck);
+    //     }
 
-        return false;
-    }
-    private boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign){
-        int x = playersInput[0];
-        int y = playersInput[1];
-        boolean entered = false;
-        for(ArrayList<int[]> array : arrayToCheck){
-            int[] getTuple = array.get(0);
-            int coordinateToFitX = (x - getTuple[0]);
-            int coordinateToFitY = sign * (y - getTuple[1]);
-            if(coordinateToFitX == coordinateToFitY){
-                array.add(playersInput);
-            }
-            if (array.size() == this.winCondition){
-                this.printer.display(this.sizeLength, this.sizeHeight, super.boardGame);
-                this.printer.displayerWinner(this.activePlayer.getSymbol());
-                return true;
-            }
-        }
-        if (!entered){
-            createNewArrayOfCoordinates(arrayToCheck);
-        }
+    //     return false;
+    // }
+    // private boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign){
+    //     int x = playersInput[0];
+    //     int y = playersInput[1];
+    //     boolean entered = false;
+    //     for(ArrayList<int[]> array : arrayToCheck){
+    //         int[] getTuple = array.get(0);
+    //         int coordinateToFitX = (x - getTuple[0]);
+    //         int coordinateToFitY = sign * (y - getTuple[1]);
+    //         if(coordinateToFitX == coordinateToFitY){
+    //             array.add(playersInput);
+    //         }
+    //         if (array.size() == this.winCondition){
+    //             this.printer.display(this.sizeLength, this.sizeHeight, super.boardGame);
+    //             this.printer.displayerWinner(this.activePlayer.getSymbol());
+    //             return true;
+    //         }
+    //     }
+    //     if (!entered){
+    //         createNewArrayOfCoordinates(arrayToCheck);
+    //     }
 
-        return false;
-    }
-    private void createNewArrayOfCoordinates(ArrayList<ArrayList<int[]>> arrayToCheck){
-        ArrayList<int[]> array = new ArrayList<int[]>();
-        array.add(playersInput);
-        arrayToCheck.add(array);
-    }
+    //     return false;
+    // }
+
 }

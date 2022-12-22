@@ -8,7 +8,7 @@ public class View {
 
   }
 
-  protected void  display(int length, int height, Cell[][] cellsBoard) {
+  protected void  displayBoard(int length, int height, Cell[][] cellsBoard) {
     System.out.println("-------------");
     for (int i = 0; i < length; i++) {
       for (int j = 0; j < height; j++) {
@@ -28,6 +28,9 @@ public class View {
   protected void playerMoveChoice(String coordinate) {
     System.out.print("Enter " + coordinate + ": ");
   }
+  protected void displayInputError(){
+    System.out.println("Error: please try again");
+  }
 
   protected void boxIsFilled() {
     System.out.println("Box already filled, please try again");
@@ -40,9 +43,6 @@ public class View {
     System.out.println("Player '" + winner + "' has won!");
   }
 
-  protected void displayInputError(){
-    System.out.println("Error: please try again");
-  }
 
   protected void displayAskNewGame(){
     System.out.println("Do you want to play again? (Y / N)");

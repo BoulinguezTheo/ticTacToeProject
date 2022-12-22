@@ -4,13 +4,14 @@ import java.util.Random;
 
 public class ArtificialPlayer extends Player {
     private String symbol;
+    final protected String type = "Bot";
 
     public ArtificialPlayer(String pSymbol){
         this.symbol = pSymbol;
     }
     @Override
     protected String getType(){
-        return "Bot";
+        return this.type;
     }
 
     @Override
