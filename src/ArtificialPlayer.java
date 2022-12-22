@@ -15,7 +15,7 @@ public class ArtificialPlayer extends Player {
     }
 
     @Override
-    protected int[] getMoveFromPlayer() {
+    protected int[] getMoveFromPlayer(UserInteraction interactor) {
         //Check if box is occupied
         int [] playerEntries = generateRandomInputs();
         return playerEntries;

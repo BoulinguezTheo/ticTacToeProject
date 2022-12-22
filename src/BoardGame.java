@@ -22,8 +22,11 @@ public abstract class BoardGame {
         this.player2 = this.interaction.setupPlayers("2st", "O");
     }
 
-    protected abstract void play();
     protected abstract void playGame();
+
+    public void setOwner(int[] input, Player activePlayer){
+        this.boardGame[input[1]][input[0]].representation = activePlayer.getSymbol();
+    }
 
     public boolean processInputColumnLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck, int[] inputCoordinates){
         if (arrayToCheck.size() == 0){
@@ -42,11 +45,11 @@ public abstract class BoardGame {
             return checkIfGameWonDiags(arrayToCheck, sign);
         }
     }
-    
-    protected abstract boolean checkIfGameWonColumnAndLines();
-    protected abstract boolean checkIfGameWonDiags();
 
-    private void createNewArrayOfCoordinates(ArrayList<ArrayList<int[]>> arrayToCheck, int[] inputCoordinates){
+    protected abstract boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck);
+    protected abstract boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign);
+
+    protected void createNewArrayOfCoordinates(ArrayList<ArrayList<int[]>> arrayToCheck, int[] inputCoordinates){
         ArrayList<int[]> array = new ArrayList<int[]>();
         array.add(inputCoordinates);
         arrayToCheck.add(array);

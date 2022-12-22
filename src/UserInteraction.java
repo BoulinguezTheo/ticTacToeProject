@@ -39,6 +39,14 @@ public class UserInteraction {
         this.printRequests.boxIsFilled();
     }
 
+    protected void getDisplayBoard(int sizeLength, int sizeHeight, Cell[][] boardGame){
+        printRequests.displayBoard(sizeLength, sizeHeight, boardGame);
+    }
+
+    protected void getDisplayWinner(String playerSymbol){
+        printRequests.displayerWinner(playerSymbol);
+    }
+
     protected boolean playAgain(){
         boolean correctEntry = false;
         String otherGame;

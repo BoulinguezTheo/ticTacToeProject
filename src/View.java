@@ -34,7 +34,7 @@ public class View {
 
   protected void boxIsFilled() {
     System.out.println("Box already filled, please try again");
-  }
+  } 
 
   protected void displayPlayerTurn(String pSymbolPlayer) {
     System.out.println("It's player '" + pSymbolPlayer + "' turn");
