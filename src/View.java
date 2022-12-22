@@ -3,11 +3,12 @@ package src;
 
 public class View {
 
+
   public View() {
 
   }
 
-  protected void display(int length, int height, Cell[][] cellsBoard) {
+  protected void  display(int length, int height, Cell[][] cellsBoard) {
     System.out.println("-------------");
     for (int i = 0; i < length; i++) {
       for (int j = 0; j < height; j++) {

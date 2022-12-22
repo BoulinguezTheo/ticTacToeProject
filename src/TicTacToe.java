@@ -1,25 +1,19 @@
 package src;
 
-import org.w3c.dom.ls.LSOutput;
+// import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
-public class TicTacToe {
+public class TicTacToe extends BoardGame{
     private final int winCondition = 3;
     private int sizeHeight;
     private int sizeLength;
     private int[] playersInput;
-
-    public int turn;
-    private boolean again;
-    private Cell[][] cellsBoard;
-    Cell cell;
-    UserInteraction interaction;
+    // private boolean again;
+    // UserInteraction interaction;
     View printer;
-    Player player1;
-    Player player2;
     Player activePlayer;
 
 
@@ -27,38 +21,40 @@ public class TicTacToe {
         //Initiate variables
         this.sizeHeight = 3;
         this.sizeLength = 3;
-        this.turn = 0;
         // Initiate Objects
-        this.cell = new Cell();
-        this.cellsBoard = initCells();
-        this.interaction = new UserInteraction();
+        super.boardGame = initCells();
         this.printer = new View();
-            //Setup players;
-        player1 = interaction.setupPlayers("1st", "X");
-        player2 = interaction.setupPlayers("2nd", "O");
-        // player1 = new ArtificialPlayer("X");
-        // player2 = new ArtificialPlayer("O");
     }
 
-    protected void play(){
-        do {
-            playGame();
-            again = this.interaction.playAgain();
-        }while(again);
+    protected int getSizeLength(){
+        return this.sizeLength;
     }
 
+    protected int getSizeHeight(){
+        return this.sizeHeight;
+    }
+
+    // @Override
+    // protected void play(){
+    //     do {
+    //         playGame();
+    //         again = this.interaction.playAgain();
+    //     }while(again);
+    // }
+
+    @Override
     protected void playGame(){
         do {
-            this.turn++;
+            super.turns++;
             activePlayer = (activePlayer == player1) ? player2 : player1;
-            this.printer.display(this.sizeLength, this.sizeHeight, this.cellsBoard);
+            this.printer.display(this.sizeLength, this.sizeHeight, super.boardGame);
             getValidMove();
             setOwner(playersInput);
-        } while(!isWinner() && this.turn != 9);
+        } while(!isWinner() && super.turns != 9);
 
 
     }
-
+ 
     private Cell[][] initCells(){
         Cell[][] cells = new Cell[this.sizeLength][this.sizeHeight];
         for (int i = 0; i < this.sizeHeight; i++){
@@ -78,7 +74,7 @@ public class TicTacToe {
     public boolean isBoxFilled(int[] input){
         int inputColumn = input[1];
         int inputLine = input[0];
-        if(cellsBoard[inputColumn][inputLine].representation == " "){
+        if(super.boardGame[inputColumn][inputLine].representation == " "){
             return false;
         } else {
             if (activePlayer.getType().equals("Human")){
@@ -88,7 +84,7 @@ public class TicTacToe {
         }
     }
     public void setOwner(int[] input){
-        cellsBoard[input[1]][input[0]].representation = activePlayer.getSymbol();
+        super.boardGame[input[1]][input[0]].representation = activePlayer.getSymbol();
 
     }
     public boolean isWinner(){
@@ -123,7 +119,7 @@ public class TicTacToe {
                 entered = true;
             }
             if (array.size() == this.winCondition){
-                this.printer.display(this.sizeLength, this.sizeHeight, this.cellsBoard);
+                this.printer.display(this.sizeLength, this.sizeHeight, super.boardGame);
                 this.printer.displayerWinner(this.activePlayer.getSymbol());
                 return true;
             }
@@ -146,7 +142,7 @@ public class TicTacToe {
                 array.add(playersInput);
             }
             if (array.size() == this.winCondition){
-                this.printer.display(this.sizeLength, this.sizeHeight, this.cellsBoard);
+                this.printer.display(this.sizeLength, this.sizeHeight, super.boardGame);
                 this.printer.displayerWinner(this.activePlayer.getSymbol());
                 return true;
             }

@@ -14,6 +14,7 @@ public class UserInteraction {
         newGameScanner = new Scanner(System.in);
         printRequests = new View();
     }
+
     protected Player setupPlayers(String playerNth, String pSymbol){
         String player;
         do {
