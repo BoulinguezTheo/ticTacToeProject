@@ -38,7 +38,6 @@ public class TicTacToe {
         player2 = interaction.setupPlayers("2nd", "O");
         // player1 = new ArtificialPlayer("X");
         // player2 = new ArtificialPlayer("O");
-
     }
 
     protected void play(){
