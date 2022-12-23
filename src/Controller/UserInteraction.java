@@ -1,5 +1,11 @@
-package src;
+package src.Controller;
 import java.util.Scanner;
+
+import src.Model.ArtificialPlayer;
+import src.Model.Cell;
+import src.Model.HumanPlayer;
+import src.Model.Player;
+import src.Vue.View;
 
 public class UserInteraction {
     Scanner setupPlayersScanner;
@@ -15,7 +21,7 @@ public class UserInteraction {
         printRequests = new View();
     }
 
-    protected Player setupPlayers(String playerNth, String pSymbol){
+    public Player setupPlayers(String playerNth, String pSymbol){
         String player;
         do {
             this.printRequests.playersTypeChoice(playerNth, pSymbol);
@@ -25,13 +31,13 @@ public class UserInteraction {
         return (player.equals("1")) ? new HumanPlayer(pSymbol) : new ArtificialPlayer(pSymbol);
     }
 
-    protected String askPlayerMove(String coordinate){
+    public String askPlayerMove(String coordinate){
         this.printRequests.playerMoveChoice(coordinate);
         return moveScanner.nextLine();
         //Need close scanner but don't know where
     }
 
-    protected void getDisplayInputError(){
+    public void getDisplayInputError(){
         this.printRequests.displayInputError();
     }
 

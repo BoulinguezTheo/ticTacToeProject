@@ -1,6 +1,8 @@
-package src;
+package src.Model;
 
 import java.util.Random;
+
+import src.Controller.UserInteraction;
 
 public class ArtificialPlayer extends Player {
     private String symbol;
@@ -10,12 +12,12 @@ public class ArtificialPlayer extends Player {
         this.symbol = pSymbol;
     }
     @Override
-    protected String getType(){
+    public String getType(){
         return this.type;
     }
 
     @Override
-    protected int[] getMoveFromPlayer(UserInteraction interactor) {
+    public int[] getMoveFromPlayer(UserInteraction interactor) {
         //Check if box is occupied
         int [] playerEntries = generateRandomInputs();
         return playerEntries;

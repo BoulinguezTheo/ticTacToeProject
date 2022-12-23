@@ -1,6 +1,8 @@
-package src;
+package src.Model;
 
 import java.util.Scanner;
+
+import src.Controller.UserInteraction;
 
 public class HumanPlayer extends Player{
     private String symbol;
@@ -10,7 +12,7 @@ public class HumanPlayer extends Player{
         this.symbol = pSymbol;
     }
     @Override
-    protected String getType(){
+    public String getType(){
         return this.type ;
     }
 

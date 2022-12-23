@@ -1,14 +1,17 @@
-package src;
+package src.Model;
 
 import java.util.ArrayList;
 
+import src.Controller.UserInteraction;
+import src.Vue.View;
+
 public abstract class BoardGame {
-    Cell[][] boardGame;
-    Player player1;
-    Player player2;
-    UserInteraction interaction;
-    View printer;
-    int turns;
+    public Cell[][] boardGame;
+    public  Player player1;
+    public Player player2;
+    public  UserInteraction interaction;
+    public View printer;
+    public int turns;
 
     public BoardGame(){
         this.interaction = new UserInteraction();
@@ -23,6 +26,9 @@ public abstract class BoardGame {
     }
 
     protected abstract void playGame();
+    public void getPlayGame(){
+        playGame();
+    }
 
     public void setOwner(int[] input, Player activePlayer){
         this.boardGame[input[1]][input[0]].representation = activePlayer.getSymbol();

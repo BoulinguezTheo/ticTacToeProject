@@ -1,10 +1,14 @@
-package src;
+package src.Controller;
 
 // import org.w3c.dom.ls.LSOutput;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+
+import src.Model.BoardGame;
+import src.Model.Cell;
+import src.Model.Player;
 
 public class TicTacToe extends BoardGame{
     private final int winCondition = 3;
@@ -74,8 +78,8 @@ public class TicTacToe extends BoardGame{
     public boolean isWinner(){
         return super.processInputColumnLines(activePlayer.getLineArrays(), 0, playersInput)
                 || super.processInputColumnLines(activePlayer.getColumnArrays(), 1, playersInput)
-                || super.processInputDiags(activePlayer.diagXMinusOneArrays(), -1, playersInput)
-                || super.processInputDiags(activePlayer.diagXPlusOneArrays(), 1, playersInput);
+                || super.processInputDiags(activePlayer.getDiagXMinusOneArrays(), -1, playersInput)
+                || super.processInputDiags(activePlayer.getDiagXPlusOneArrays(), 1, playersInput);
     }
    
     @Override

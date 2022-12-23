@@ -1,4 +1,4 @@
-package src;
+package src.Model;
 
 public class Cell {
     private final String LeftPart;

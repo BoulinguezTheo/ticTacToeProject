@@ -1,7 +1,9 @@
 
-package src;
+package src.Model;
 import java.util.ArrayList;
 import java.util.Scanner;
+
+import src.Controller.UserInteraction;
 
 public abstract class Player {
     private ArrayList<ArrayList<int[]>> lineArrays;
@@ -9,8 +11,7 @@ public abstract class Player {
     private ArrayList<ArrayList<int[]>> diagXMinusOneArrays;
     private ArrayList<ArrayList<int[]>> diagXPlusOneArrays;
 
-    // UserInteraction interaction;
-    // View printer = new View();
+
     public static int turn;
     String symbol;
 
@@ -20,7 +21,6 @@ public abstract class Player {
         columnArrays = new ArrayList<ArrayList<int[]>>();
         diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
         diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
-        // interaction = new UserInteraction();
     }
     public Player(String pSymbol) {
         this.turn = 0;
@@ -29,9 +29,8 @@ public abstract class Player {
         ArrayList<ArrayList<int[]>>columnArrays = new ArrayList<ArrayList<int[]>>();
         ArrayList<ArrayList<int[]>>diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
         ArrayList<ArrayList<int[]>>diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
-        // interaction = new UserInteraction();
     }
-    protected abstract int[] getMoveFromPlayer(UserInteraction interactor);
+    public abstract int[] getMoveFromPlayer(UserInteraction interactor);
     public int[] askPlayerInput(UserInteraction interactor) {
         boolean validColumn, validLine;
         String column, line;
@@ -68,13 +67,13 @@ public abstract class Player {
     public ArrayList<ArrayList<int[]>> getColumnArrays(){
         return columnArrays;
     }
-    public ArrayList<ArrayList<int[]>> diagXMinusOneArrays(){
+    public ArrayList<ArrayList<int[]>> getDiagXMinusOneArrays(){
         return diagXMinusOneArrays;
     }
-    public ArrayList<ArrayList<int[]>> diagXPlusOneArrays(){
+    public ArrayList<ArrayList<int[]>> getDiagXPlusOneArrays(){
         return diagXPlusOneArrays;
     }
 
-    abstract protected String getType();
+    abstract public String getType();
 }
 
