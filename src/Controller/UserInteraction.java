@@ -1,3 +1,14 @@
+/*
+ * Nom de classe : UserInteraction
+ *
+ * Description   : Classe regroupant toutes les fonctions demandant aux utilisateurs d'intéragir avec le programme
+ *
+ * Version       : 1.0
+ *
+ * Date          : 02/01/2023
+ *
+ * Copyright     : moi
+ */
 package src.Controller;
 import java.util.Scanner;
 

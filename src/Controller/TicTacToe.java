@@ -1,6 +1,18 @@
+/*
+ * Nom de classe : TicTacToe
+ *
+ * Description   : Classe regroupant les fonctions spécifiques au bon fonctionnement et respectant les règles d'un jeu
+ *                 de tictactoe.
+ *
+ * Version       : 1.0
+ *
+ * Date          : 02/01/2023
+ *
+ * Copyright     : moi
+ */
 package src.Controller;
-
 // import org.w3c.dom.ls.LSOutput;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -25,14 +37,6 @@ public class TicTacToe extends BoardGame{
         this.sizeLength = 3;
         // Initiate Objects
         super.boardGame = initCells();
-    }
-
-    protected int getSizeLength(){
-        return this.sizeLength;
-    }
-
-    protected int getSizeHeight(){
-        return this.sizeHeight;
     }
 
     @Override
@@ -62,6 +66,7 @@ public class TicTacToe extends BoardGame{
             playersInput = this.activePlayer.getMoveFromPlayer(interaction);
         } while (isBoxFilled(playersInput));
     }
+
     public boolean  isBoxFilled(int[] input){
         int inputColumn = input[1];
         int inputLine = input[0];
@@ -74,14 +79,19 @@ public class TicTacToe extends BoardGame{
             return true;
         }
     }
-    
+
+    /**
+     *  Fonction permettant de déterminer si la partie est gagnée
+     */
     public boolean isWinner(){
         return super.processInputColumnLines(activePlayer.getLineArrays(), 0, playersInput)
                 || super.processInputColumnLines(activePlayer.getColumnArrays(), 1, playersInput)
                 || super.processInputDiags(activePlayer.getDiagXMinusOneArrays(), -1, playersInput)
                 || super.processInputDiags(activePlayer.getDiagXPlusOneArrays(), 1, playersInput);
     }
-   
+    /**
+     *  Permet de déterminé si une ligne ou une colonne est gagnante
+     */
     @Override
     protected boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck){
         boolean entered = false;
@@ -104,6 +114,9 @@ public class TicTacToe extends BoardGame{
 
         return false;
     }
+    /**
+     *  Fonction permettant de déterminer si une digonale est gagnante.
+     */
     protected boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign){
         int x = playersInput[0];
         int y = playersInput[1];

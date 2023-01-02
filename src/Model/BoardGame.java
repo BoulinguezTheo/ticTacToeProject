@@ -1,3 +1,15 @@
+/*
+ * Nom de classe : BoardGame
+ *
+ * Description   : Classe regroupant les fonctions permettant de traiter et stocker les coups joués,
+ *                 créer des joueurs et d'afficher sur le plateau de jeu les pions joués peut importe le type de jeu.
+ *
+ * Version       : 1.0
+ *
+ * Date          : 02/01/2023
+ *
+ * Copyright     : moi
+ */
 package src.Model;
 
 import java.util.ArrayList;
@@ -33,7 +45,9 @@ public abstract class BoardGame {
     public void setOwner(int[] input, Player activePlayer){
         this.boardGame[input[1]][input[0]].representation = activePlayer.getSymbol();
     }
-
+    /**
+     *  Traite les coordonnées jouées pour les lignes et colonnes possibles pour gagner la partie.
+     */
     public boolean processInputColumnLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck, int[] inputCoordinates){
         if (arrayToCheck.size() == 0){
             createNewArrayOfCoordinates(arrayToCheck, inputCoordinates);
@@ -42,7 +56,9 @@ public abstract class BoardGame {
             return checkIfGameWonColumnAndLines(arrayToCheck,coordinateToCheck);
         }
     }
-
+    /**
+     *  Traite les coordonnées jouées pour les diagonales possibles pour gagner la partie.
+     */
     public boolean processInputDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign, int[] inputCoordinates){
         if (arrayToCheck.size() == 0){
             createNewArrayOfCoordinates(arrayToCheck, inputCoordinates);
@@ -55,6 +71,9 @@ public abstract class BoardGame {
     protected abstract boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck);
     protected abstract boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign);
 
+    /**
+     *  Créer un nouvel array si la coordonnée du coup n'appartient pas à une diagonale, ligne ou colonne possible.
+     */
     protected void createNewArrayOfCoordinates(ArrayList<ArrayList<int[]>> arrayToCheck, int[] inputCoordinates){
         ArrayList<int[]> array = new ArrayList<int[]>();
         array.add(inputCoordinates);

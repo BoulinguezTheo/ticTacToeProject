@@ -1,3 +1,14 @@
+/*
+ * Nom de classe : HumanPlayer
+ *
+ * Description   : Classe regroupant les fonctions spécifiques au bon fonctionnement d'un joueur humain.
+ *
+ * Version       : 1.0
+ *
+ * Date          : 02/01/2023
+ *
+ * Copyright     : moi
+ */
 package src.Model;
 
 import java.util.Scanner;

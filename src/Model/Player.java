@@ -1,4 +1,14 @@
-
+/*
+ * Nom de classe : Player
+ *
+ * Description   : Classe abstraite regroupant les fonctions communes aux différents types de joueurs possibles.
+ *
+ * Version       : 1.0
+ *
+ * Date          : 02/01/2023
+ *
+ * Copyright     : moi
+ */
 package src.Model;
 import java.util.ArrayList;
 import java.util.Scanner;

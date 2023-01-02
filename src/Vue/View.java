@@ -1,3 +1,14 @@
+/*
+ * Nom de classe : View
+ *
+ * Description   : Classe regroupant les fonctions spécifiques au bon affichage du jeu en console.
+ *
+ * Version       : 1.0
+ *
+ * Date          : 02/01/2023
+ *
+ * Copyright     : moi
+ */
 package src.Vue;
 
 import src.Model.Cell;
@@ -32,18 +43,15 @@ public class View {
   public void displayInputError(){
     System.out.println("Error: please try again");
   }
-
   public void boxIsFilled() {
     System.out.println("Box already filled, please try again");
-  } 
-
+  }
   public void displayPlayerTurn(String pSymbolPlayer) {
     System.out.println("It's player '" + pSymbolPlayer + "' turn");
   }
   public void displayerWinner(String winner){
     System.out.println("Player '" + winner + "' has won!");
   }
-
 
   public void displayAskNewGame(){
     System.out.println("Do you want to play again? (Y / N)");
