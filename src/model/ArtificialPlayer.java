@@ -9,11 +9,11 @@
  *
  * Copyright     : moi
  */
-package src.Model;
+package src.model;
 
 import java.util.Random;
 
-import src.Controller.UserInteraction;
+import src.vue.UserInteraction;
 
 public class ArtificialPlayer extends Player {
     private String symbol;

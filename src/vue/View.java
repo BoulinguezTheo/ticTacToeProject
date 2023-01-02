@@ -9,9 +9,9 @@
  *
  * Copyright     : moi
  */
-package src.Vue;
+package src.vue;
 
-import src.Model.Cell;
+import src.model.Cell;
 
 public class View {
 
@@ -49,7 +49,7 @@ public class View {
   public void displayPlayerTurn(String pSymbolPlayer) {
     System.out.println("It's player '" + pSymbolPlayer + "' turn");
   }
-  public void displayerWinner(String winner){
+  public void displayWinner(String winner){
     System.out.println("Player '" + winner + "' has won!");
   }
 

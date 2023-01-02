@@ -9,14 +9,14 @@
  *
  * Copyright     : moi
  */
-package src.Controller;
+package src.vue;
 import java.util.Scanner;
 
-import src.Model.ArtificialPlayer;
-import src.Model.Cell;
-import src.Model.HumanPlayer;
-import src.Model.Player;
-import src.Vue.View;
+import src.model.ArtificialPlayer;
+import src.model.Cell;
+import src.model.HumanPlayer;
+import src.model.Player;
+import src.vue.View;
 
 public class UserInteraction {
     Scanner setupPlayersScanner;
@@ -52,16 +52,16 @@ public class UserInteraction {
         this.printRequests.displayInputError();
     }
 
-    protected void getDisplayBoxIsFilled(){
+    public void getDisplayBoxIsFilled(){
         this.printRequests.boxIsFilled();
     }
 
-    protected void getDisplayBoard(int sizeLength, int sizeHeight, Cell[][] boardGame){
+    public void getDisplayBoard(int sizeLength, int sizeHeight, Cell[][] boardGame){
         printRequests.displayBoard(sizeLength, sizeHeight, boardGame);
     }
 
-    protected void getDisplayWinner(String playerSymbol){
-        printRequests.displayerWinner(playerSymbol);
+    public void getDisplayWinner(String playerSymbol){
+        printRequests.displayWinner(playerSymbol);
     }
 
     protected boolean playAgain(){

@@ -9,11 +9,9 @@
  *
  * Copyright     : moi
  */
-package src.Model;
+package src.model;
 
-import java.util.Scanner;
-
-import src.Controller.UserInteraction;
+import src.vue.UserInteraction;
 
 public class HumanPlayer extends Player{
     private String symbol;

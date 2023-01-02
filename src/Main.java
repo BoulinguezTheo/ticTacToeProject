@@ -1,12 +1,11 @@
 package src;
 
-import java.util.*;
-
-import src.Controller.TicTacToe;
-import src.Model.BoardGame;
+import src.controller.GameController;
+import src.controller.TicTacToe;
+import src.model.BoardGame;
 public class Main {
     public static void main(String[] args) {
-        BoardGame ticTacToe = new TicTacToe();
+        GameController ticTacToe = new TicTacToe();
         ticTacToe.getPlayGame();
     }
 }

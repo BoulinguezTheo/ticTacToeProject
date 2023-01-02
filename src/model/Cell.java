@@ -9,7 +9,7 @@
  *
  * Copyright     : moi
  */
-package src.Model;
+package src.model;
 
 public class Cell {
     private final String LeftPart;
