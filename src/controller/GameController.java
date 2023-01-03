@@ -28,7 +28,8 @@ public abstract class GameController implements GameControllerInterface{
         this.interaction = new UserInteraction();
         this.boardGame = new BoardGame();
     }
-    public abstract void playGame();
+    public abstract void play();
+    public abstract void getValidMove();
     public int[] getPlayersInput(){
         return this.playersInput;
     }
@@ -75,5 +76,26 @@ public abstract class GameController implements GameControllerInterface{
             }
         } while (!correctEntry);
         return newGameChoice;
+    }
+
+    protected GameState initGameFunctions(){
+        this.createPlayers();
+        return GameState.PLAYGAME;
+    }
+    protected abstract GameState playGame();
+    protected Player addTurnSetActivePlayerDisplayBoard(Player pActive, int pHeight, int pLength){
+        this.boardGame.addTurn();
+        this.printer.displayBoard(pLength, pHeight, this.boardGame.getBoardCell());
+        return (pActive == this.player1) ? this.player2 : this.player1;
+    }
+    protected GameState moveValidAndSetStateMachine(Player pActive){
+        getValidMove();
+        this.boardGame.setOwner(this.getPlayersInput(), pActive.getSymbol());
+        return isGameOver();
+    }
+    protected GameState resetBoard(int pHeight, int pLength){
+        resetCells(this.resetSymbol, pHeight, pLength);
+        this.boardGame.resetTurns();
+        return GameState.INITGAME;
     }
 }

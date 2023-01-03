@@ -15,6 +15,7 @@ public interface GameInterface {
 
     void addTurn();
 
+
     boolean processInputColumnLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck, int[] inputCoordinates, TicTacToe pGame);
     boolean processInputDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign, int[] inputCoordinates,TicTacToe pGame);
     void createNewArrayOfCoordinates(ArrayList<ArrayList<int[]>> arrayToCheck, int[] inputCoordinates);

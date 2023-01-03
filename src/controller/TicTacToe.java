@@ -32,21 +32,15 @@ public class TicTacToe extends GameController  {
     }
 
     @Override
-    public void playGame(){
+    public void play(){
 
         while(stateMachine != GameState.EXIT){
             switch (stateMachine){
                 case INITGAME:
-                    super.createPlayers();
-                    stateMachine = GameState.PLAYGAME;
+                    stateMachine = super.initGameFunctions();
                     break;
                 case PLAYGAME:
-                    boardGame.addTurn();
-                    this.activePlayer = (this.activePlayer == player1) ? player2 : player1;
-                    printer.displayBoard(this.sizeLength, this.sizeHeight, boardGame.getBoardCell());
-                    getValidMove();
-                    boardGame.setOwner(super.getPlayersInput(), this.activePlayer.getSymbol());
-                    stateMachine = isGameOver();
+                    stateMachine = playGame();
                     break;
                 case ENDGAME:
                     stateMachine = GameState.PLAYAGAIN;
@@ -55,18 +49,15 @@ public class TicTacToe extends GameController  {
                     stateMachine = super.treatPlayAgainChoice();
                     break;
                 case RESETBOARD:
-                    resetCells(super.resetSymbol, this.sizeHeight, this.sizeLength);
-                    boardGame.resetTurns();
-                    stateMachine = GameState.INITGAME;
+                    stateMachine = super.resetBoard(this.sizeHeight, this.sizeLength);
                     break;
                 case EXIT:
                     break;
             }
         }
         printer.displayExit();
-
     }
- 
+    @Override
     public void getValidMove(){
         printer.displayPlayerTurn(this.activePlayer.getSymbol());
         do {
@@ -80,11 +71,15 @@ public class TicTacToe extends GameController  {
         if(boardGame.getBoardCell()[inputColumn][inputLine].representation == " "){
             return false;
         } else {
-            if (activePlayer.getType().equals("Human")){
+            if (this.activePlayer.getType().equals("Human")){
                 interaction.getDisplayBoxIsFilled();
             }
             return true;
         }
+    }
+    protected GameState playGame(){
+        this.activePlayer = super.addTurnSetActivePlayerDisplayBoard(this.activePlayer, this.sizeHeight, this.sizeLength);
+        return super.moveValidAndSetStateMachine(this.activePlayer);
     }
     /**
      *  Fonction permettant de déterminer si la partie est gagnée
