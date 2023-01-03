@@ -16,7 +16,7 @@ import java.util.ArrayList;
 
 import src.controller.TicTacToe;
 
-public class BoardGame {
+public class BoardGame implements GameInterface{
     public Cell[][] board;
     public int turns;
 
@@ -24,6 +24,7 @@ public class BoardGame {
     public BoardGame(){
         turns = 0;
     }
+
     public void setBoardCell(Cell[][] pBoard){
         board = pBoard;
     }
@@ -35,12 +36,15 @@ public class BoardGame {
     public void setOwner(int[] input, String pSymbol){
         this.board[input[1]][input[0]].representation = pSymbol;
     }
+
     public int getTurns(){
         return this.turns;
     }
+
     public void addTurn(){
         this.turns++;
     }
+
     public void resetTurns(){
         this.turns = 0;
     }
@@ -74,7 +78,4 @@ public class BoardGame {
         array.add(inputCoordinates);
         arrayToCheck.add(array);
     }
-
-    
-
 }

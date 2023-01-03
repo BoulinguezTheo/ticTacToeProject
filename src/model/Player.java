@@ -13,6 +13,7 @@ package src.model;
 import java.util.ArrayList;
 
 import src.vue.UserInteraction;
+import src.vue.UserInteractionInterface;
 
 public abstract class Player {
     private ArrayList<ArrayList<int[]>> lineArrays;
@@ -34,8 +35,8 @@ public abstract class Player {
         ArrayList<ArrayList<int[]>>diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
         ArrayList<ArrayList<int[]>>diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
     }
-    public abstract int[] getMoveFromPlayer(UserInteraction interactor);
-    public int[] askPlayerInput(UserInteraction interactor) {
+    public abstract int[] getMoveFromPlayer(UserInteractionInterface interactor);
+    public int[] askPlayerInput(UserInteractionInterface interactor) {
         boolean validColumn, validLine;
         String column, line;
 
@@ -54,7 +55,7 @@ public abstract class Player {
         return new int[]{Integer.parseInt(column), Integer.parseInt(line)};
     }
 
-    public boolean  validInputUser(String input, String typeInput, UserInteraction interactor ) {
+    public boolean  validInputUser(String input, String typeInput, UserInteractionInterface interactor ) {
         //Check if the input is valid
         if (!input.equals("0") && !input.equals("1") && !input.equals("2")) {
             interactor.getDisplayInputError(); 

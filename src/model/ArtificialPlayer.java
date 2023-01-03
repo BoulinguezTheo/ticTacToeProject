@@ -14,6 +14,7 @@ package src.model;
 import java.util.Random;
 
 import src.vue.UserInteraction;
+import src.vue.UserInteractionInterface;
 
 public class ArtificialPlayer extends Player {
     private String symbol;
@@ -28,7 +29,7 @@ public class ArtificialPlayer extends Player {
     }
 
     @Override
-    public int[] getMoveFromPlayer(UserInteraction interactor) {
+    public int[] getMoveFromPlayer(UserInteractionInterface interactor) {
         //Check if box is occupied
         int [] playerEntries = generateRandomInputs();
         return playerEntries;

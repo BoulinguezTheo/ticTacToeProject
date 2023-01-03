@@ -13,23 +13,22 @@ package src.vue;
 import java.util.Scanner;
 
 import src.model.ArtificialPlayer;
-import src.model.Cell;
 import src.model.HumanPlayer;
 import src.model.Player;
 
-public class UserInteraction {
+public class UserInteraction implements UserInteractionInterface {
     Scanner setupPlayersScanner;
     Scanner moveScanner;
     Scanner newGameScanner;
-    View printRequests;
+    ShowInterface printRequests;
 
     public UserInteraction(){
         setupPlayersScanner = new Scanner(System.in);
         moveScanner = new Scanner(System.in);
         newGameScanner = new Scanner(System.in);
-        printRequests = new View();
+        printRequests = new ShowEn();
     }
-
+    @Override
     public Player setupPlayers(String playerNth, String pSymbol){
         String player;
         do {
@@ -39,21 +38,21 @@ public class UserInteraction {
         //Need close scanner but don't know where
         return (player.equals("1")) ? new HumanPlayer(pSymbol) : new ArtificialPlayer(pSymbol);
     }
-
+    @Override
     public String askPlayerMove(String coordinate){
         this.printRequests.playerMoveChoice(coordinate);
         return moveScanner.nextLine();
         //Need close scanner but don't know where
     }
-
+    @Override
     public void getDisplayInputError(){
         this.printRequests.displayInputError();
     }
-
+    @Override
     public void getDisplayBoxIsFilled(){
         this.printRequests.boxIsFilled();
     }
-
+    @Override
     public String getPlayAgainChoice(){
         return newGameScanner.nextLine();
     }

@@ -12,6 +12,7 @@
 package src.model;
 
 import src.vue.UserInteraction;
+import src.vue.UserInteractionInterface;
 
 public class HumanPlayer extends Player{
     private String symbol;
@@ -26,7 +27,7 @@ public class HumanPlayer extends Player{
     }
 
     @Override
-    public int[] getMoveFromPlayer(UserInteraction interactor) {
+    public int[] getMoveFromPlayer(UserInteractionInterface interactor) {
         //Check if box is occupied
         int [] playerEntries = askPlayerInput(interactor);
         return playerEntries;

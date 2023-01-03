@@ -3,41 +3,43 @@ package src.controller;
 
 import src.model.BoardGame;
 import src.model.Cell;
+import src.model.GameInterface;
 import src.model.Player;
+import src.vue.ShowInterface;
 import src.vue.UserInteraction;
-import src.vue.View;
+import src.vue.ShowEn;
+import src.vue.UserInteractionInterface;
 
 import java.util.ArrayList;
 
-public abstract class GameController {
+public abstract class GameController implements GameControllerInterface{
     private int[] playersInput;
     protected final String resetSymbol = " ";
-    protected View printer;
-    protected BoardGame boardGame;
+    protected ShowInterface printer;
+    protected GameInterface boardGame;
     public  Player player1;
     public Player player2;
-    public UserInteraction interaction;
-    GameState stateMachine;
+    public UserInteractionInterface interaction;
+    protected GameState stateMachine;
 
-
-
+    
     public GameController(){
-        this.printer = new View();
+        this.printer = new ShowEn();
         this.interaction = new UserInteraction();
         this.boardGame = new BoardGame();
     }
     public abstract void playGame();
-    protected int[] getPlayersInput(){
+    public int[] getPlayersInput(){
         return this.playersInput;
     }
-    protected void setPlayersInput(int[] pInput){
+    public void setPlayersInput(int[] pInput){
         this.playersInput = pInput;
     }
-    protected void createPlayers(){
+    public void createPlayers(){
         this.player1 = this.interaction.setupPlayers("1st", "X");
         this.player2 = this.interaction.setupPlayers("2st", "O");
     }
-    protected Cell[][] initCells(int pSizeHeight, int pSizeLength){
+    public Cell[][] initCells(int pSizeHeight, int pSizeLength){
         Cell[][] cells = new Cell[pSizeLength][pSizeHeight];
         for (int i = 0; i < pSizeHeight; i++){
             for (int j = 0; j < pSizeLength; j++){
@@ -46,7 +48,7 @@ public abstract class GameController {
         }
         return cells;
     }
-    protected void resetCells(String pSymbolReset, int pSizeHeight, int pSizeLength){
+    public void resetCells(String pSymbolReset, int pSizeHeight, int pSizeLength){
         for (int i = 0; i < pSizeHeight; i++){
             for (int j = 0; j < pSizeLength; j++){
                 int[] resetCell = {j, i};
@@ -54,15 +56,15 @@ public abstract class GameController {
             }
         }
     }
-    protected abstract boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck);
-    protected abstract boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign);
-    protected GameState treatPlayAgainChoice(){
+    public abstract boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck);
+    public abstract boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign);
+    public GameState treatPlayAgainChoice(){
         if (correctNewGameEntry().equalsIgnoreCase("y")){
             return GameState.RESETBOARD;
         }
         return GameState.EXIT;
     }
-    private String correctNewGameEntry(){
+    public String correctNewGameEntry(){
         boolean correctEntry = false;
         String newGameChoice;
         do {
@@ -74,7 +76,4 @@ public abstract class GameController {
         } while (!correctEntry);
         return newGameChoice;
     }
-
-
-
 }
