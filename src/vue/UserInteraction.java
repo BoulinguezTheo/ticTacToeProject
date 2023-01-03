@@ -16,13 +16,11 @@ import src.model.ArtificialPlayer;
 import src.model.Cell;
 import src.model.HumanPlayer;
 import src.model.Player;
-import src.vue.View;
 
 public class UserInteraction {
     Scanner setupPlayersScanner;
     Scanner moveScanner;
     Scanner newGameScanner;
-    //Can I set 1 scanner for both ?
     View printRequests;
 
     public UserInteraction(){
@@ -56,26 +54,8 @@ public class UserInteraction {
         this.printRequests.boxIsFilled();
     }
 
-    public void getDisplayBoard(int sizeLength, int sizeHeight, Cell[][] boardGame){
-        printRequests.displayBoard(sizeLength, sizeHeight, boardGame);
-    }
-
-    public void getDisplayWinner(String playerSymbol){
-        printRequests.displayWinner(playerSymbol);
-    }
-
-    protected boolean playAgain(){
-        boolean correctEntry = false;
-        String otherGame;
-        do {
-            this.printRequests.displayAskNewGame();
-            otherGame = newGameScanner.nextLine();
-            if (otherGame.equalsIgnoreCase("Y") || otherGame.equalsIgnoreCase("N")) {
-                correctEntry = true;
-
-            }
-        } while (!correctEntry);
-        return (otherGame.equalsIgnoreCase("Y") ? true : false);
+    public String getPlayAgainChoice(){
+        return newGameScanner.nextLine();
     }
 
 

@@ -11,20 +11,16 @@
  * Copyright     : moi
  */
 package src.controller;
-// import org.w3c.dom.ls.LSOutput;
-
 
 import java.util.ArrayList;
-import src.vue.UserInteraction;
 import src.model.Player;
-
 public class TicTacToe extends GameController  {
     private final int winCondition = 3;
+    private final int endGameByTurns = 9;
     private int sizeHeight;
     private int sizeLength;
     // private boolean again;
     Player activePlayer;
-
 
     public TicTacToe() {
         //Initiate variables
@@ -32,17 +28,43 @@ public class TicTacToe extends GameController  {
         this.sizeLength = 3;
         // Initiate Objects
         super.boardGame.setBoardCell(super.initCells(this.sizeHeight, this.sizeLength));
+        stateMachine = GameState.INITGAME;
     }
 
     @Override
-    protected void playGame(){
-        do {
-            super.boardGame.turns++;
-            this.activePlayer = (this.activePlayer == super.player1) ? super.player2 : super.player1;
-            super.printer.displayBoard(this.sizeLength, this.sizeHeight, super.boardGame.getBoardCell());
-            getValidMove(); 
-            super.boardGame.setOwner(super.getPlayersInput(), activePlayer);
-        } while(!isWinner() && super.boardGame.turns != 9);
+    public void playGame(){
+
+        while(stateMachine != GameState.EXIT){
+            switch (stateMachine){
+                case INITGAME:
+                    super.createPlayers();
+                    stateMachine = GameState.PLAYGAME;
+                    break;
+                case PLAYGAME:
+                    super.boardGame.addTurn();
+                    this.activePlayer = (this.activePlayer == super.player1) ? super.player2 : super.player1;
+                    printer.displayBoard(this.sizeLength, this.sizeHeight, super.boardGame.getBoardCell());
+                    getValidMove();
+                    boardGame.setOwner(super.getPlayersInput(), this.activePlayer.getSymbol());
+                    stateMachine = isGameOver();
+                    break;
+                case ENDGAME:
+                    stateMachine = GameState.PLAYAGAIN;
+                    break;
+                case PLAYAGAIN:
+                    stateMachine = super.treatPlayAgainChoice();
+                    break;
+                case RESETBOARD:
+                    resetCells(super.resetSymbol, this.sizeHeight, this.sizeLength);
+                    super.boardGame.resetTurns();
+                    stateMachine = GameState.INITGAME;
+                    break;
+                case EXIT:
+                    break;
+            }
+        }
+        super.printer.displayExit();
+
     }
  
     public void getValidMove(){
@@ -68,7 +90,20 @@ public class TicTacToe extends GameController  {
     /**
      *  Fonction permettant de déterminer si la partie est gagnée
      */
-    public boolean isWinner(){
+    public GameState isGameOver(){
+        if(isWinner()){
+            super.printer.displayBoard(this.sizeLength, this.sizeHeight, super.boardGame.getBoardCell());
+            super.printer.displayWinner(activePlayer.getSymbol());
+            return GameState.ENDGAME;
+        } else if (super.boardGame.getTurns() == endGameByTurns){
+            super.printer.displayBoard(this.sizeLength, this.sizeHeight, super.boardGame.getBoardCell());
+            super.printer.displayDraw();
+            return GameState.ENDGAME;
+        }
+        return GameState.PLAYGAME;
+    }
+
+    private boolean isWinner(){
         return super.boardGame.processInputColumnLines(activePlayer.getLineArrays(), 0, super.getPlayersInput(), this)
                 || super.boardGame.processInputColumnLines(activePlayer.getColumnArrays(), 1, super.getPlayersInput(), this)
                 || super.boardGame.processInputDiags(activePlayer.getDiagXMinusOneArrays(), -1, super.getPlayersInput(), this)
@@ -89,8 +124,7 @@ public class TicTacToe extends GameController  {
                 entered = true;
             }
             if (array.size() == this.winCondition){
-                super.interaction.getDisplayBoard(this.sizeLength, this.sizeHeight, super.boardGame.getBoardCell());
-                super.interaction.getDisplayWinner(this.activePlayer.getSymbol());
+//                super.interaction.getDisplayBoard(this.sizeLength, this.sizeHeight, super.boardGame.getBoardCell());
                 return true;
             }
         }
@@ -116,8 +150,7 @@ public class TicTacToe extends GameController  {
                 array.add(playersInput);
             }
             if (array.size() == this.winCondition){
-                this.interaction.getDisplayBoard(this.sizeLength, this.sizeHeight, super.boardGame.getBoardCell());
-                this.interaction.getDisplayWinner(this.activePlayer.getSymbol());
+//                this.interaction.getDisplayBoard(this.sizeLength, this.sizeHeight, super.boardGame.getBoardCell());
                 return true;
             }
         }

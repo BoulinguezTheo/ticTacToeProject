@@ -52,8 +52,16 @@ public class View {
   public void displayWinner(String winner){
     System.out.println("Player '" + winner + "' has won!");
   }
+  public void displayDraw(){
+    System.out.println("It's a draw");
+  }
 
   public void displayAskNewGame(){
     System.out.println("Do you want to play again? (Y / N)");
   }
+  public void displayExit(){
+    System.out.println("Thanks for playing.");
+    System.out.println("Bye bye, baby! \uD83D\uDC4B");
+  }
+
 }

@@ -32,8 +32,17 @@ public class BoardGame {
         return board;
     }
 
-    public void setOwner(int[] input, Player activePlayer){
-        this.board[input[1]][input[0]].representation = activePlayer.getSymbol();
+    public void setOwner(int[] input, String pSymbol){
+        this.board[input[1]][input[0]].representation = pSymbol;
+    }
+    public int getTurns(){
+        return this.turns;
+    }
+    public void addTurn(){
+        this.turns++;
+    }
+    public void resetTurns(){
+        this.turns = 0;
     }
     /**
      *  Traite les coordonnées jouées pour les lignes et colonnes possibles pour gagner la partie.

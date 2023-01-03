@@ -6,6 +6,6 @@ import src.model.BoardGame;
 public class Main {
     public static void main(String[] args) {
         GameController ticTacToe = new TicTacToe();
-        ticTacToe.getPlayGame();
+        ticTacToe.playGame();
     }
 }
