@@ -31,31 +31,11 @@ public class TicTacToe extends GameController  {
         super.stateMachine = GameState.INITGAME;
     }
 
-    @Override
-    public void play(){
-
-        while(stateMachine != GameState.EXIT){
-            switch (stateMachine){
-                case INITGAME:
-                    stateMachine = super.initGameFunctions();
-                    break;
-                case PLAYGAME:
-                    stateMachine = playGame();
-                    break;
-                case ENDGAME:
-                    stateMachine = GameState.PLAYAGAIN;
-                    break;
-                case PLAYAGAIN:
-                    stateMachine = super.treatPlayAgainChoice();
-                    break;
-                case RESETBOARD:
-                    stateMachine = super.resetBoard(this.sizeHeight, this.sizeLength);
-                    break;
-                case EXIT:
-                    break;
-            }
-        }
-        printer.displayExit();
+    public int getSizeHeight(){
+        return this.sizeHeight;
+    }
+    public int getSizeLength(){
+        return this.sizeLength;
     }
     @Override
     public void getValidMove(){
@@ -77,7 +57,7 @@ public class TicTacToe extends GameController  {
             return true;
         }
     }
-    protected GameState playGame(){
+    public GameState playGame(){
         this.activePlayer = super.addTurnSetActivePlayerDisplayBoard(this.activePlayer, this.sizeHeight, this.sizeLength);
         return super.moveValidAndSetStateMachine(this.activePlayer);
     }

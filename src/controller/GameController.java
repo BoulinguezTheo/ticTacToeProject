@@ -28,7 +28,30 @@ public abstract class GameController implements GameControllerInterface{
         this.interaction = new UserInteraction();
         this.boardGame = new BoardGame();
     }
-    public abstract void play();
+    public void play(GameControllerInterface pGame){
+        while(stateMachine != GameState.EXIT){
+            switch (stateMachine){
+                case INITGAME:
+                    stateMachine = this.initGameFunctions();
+                    break;
+                case PLAYGAME:
+                    stateMachine = this.playGame();
+                    break;
+                case ENDGAME:
+                    stateMachine = GameState.PLAYAGAIN;
+                    break;
+                case PLAYAGAIN:
+                    stateMachine = this.treatPlayAgainChoice();
+                    break;
+                case RESETBOARD:
+                    stateMachine = this.resetBoard(pGame.getSizeHeight(), pGame.getSizeLength());
+                    break;
+                case EXIT:
+                    break;
+            }
+        }
+        printer.displayExit();
+    }
     public abstract void getValidMove();
     public int[] getPlayersInput(){
         return this.playersInput;
@@ -82,18 +105,18 @@ public abstract class GameController implements GameControllerInterface{
         this.createPlayers();
         return GameState.PLAYGAME;
     }
-    protected abstract GameState playGame();
-    protected Player addTurnSetActivePlayerDisplayBoard(Player pActive, int pHeight, int pLength){
+    public abstract GameState playGame();
+    public Player addTurnSetActivePlayerDisplayBoard(Player pActive, int pHeight, int pLength) {
         this.boardGame.addTurn();
         this.printer.displayBoard(pLength, pHeight, this.boardGame.getBoardCell());
         return (pActive == this.player1) ? this.player2 : this.player1;
     }
-    protected GameState moveValidAndSetStateMachine(Player pActive){
+    public GameState moveValidAndSetStateMachine(Player pActive){
         getValidMove();
         this.boardGame.setOwner(this.getPlayersInput(), pActive.getSymbol());
         return isGameOver();
     }
-    protected GameState resetBoard(int pHeight, int pLength){
+    public GameState resetBoard(int pHeight, int pLength){
         resetCells(this.resetSymbol, pHeight, pLength);
         this.boardGame.resetTurns();
         return GameState.INITGAME;

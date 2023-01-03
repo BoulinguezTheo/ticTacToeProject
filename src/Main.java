@@ -5,7 +5,7 @@ import src.controller.TicTacToe;
 
 public class Main {
     public static void main(String[] args) {
-        GameControllerInterface ticTacToe = new TicTacToe();
-        ticTacToe.play();
+        GameControllerInterface game= new TicTacToe();
+        game.play(game);
     }
 }
