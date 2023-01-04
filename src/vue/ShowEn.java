@@ -19,6 +19,15 @@ public class ShowEn implements ShowInterface {
   public ShowEn() {
 
   }
+
+  @Override
+  public void displayGameChoice(){
+    System.out.println("Welcome !");
+    System.out.println("Choose a game :");
+    System.out.println("1- TicTacToe");
+    System.out.println("2- Power 4");
+    System.out.println("3- Gomuko");
+  }
   @Override
   public void displayBoard(int length, int height, Cell[][] cellsBoard) {
     System.out.println("-------------");

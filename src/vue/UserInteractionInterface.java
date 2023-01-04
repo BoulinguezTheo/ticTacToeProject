@@ -12,5 +12,6 @@ public interface UserInteractionInterface {
     void getDisplayBoxIsFilled();
 
     String getPlayAgainChoice();
+    String getGameChoice();
 
 }

@@ -8,8 +8,10 @@ public interface GameInterface {
     void setBoardCell(Cell[][] pBoard);
 
     Cell[][] getBoardCell();
+    void setPlayerInput(int[] validMove);
+    int[] getPlayersInput();
 
-    void setOwner(int[] input, String pSymbol);
+    void setOwner(String pSymbol);
 
     int getTurns();
 
@@ -20,4 +22,5 @@ public interface GameInterface {
     boolean processInputDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign, int[] inputCoordinates,TicTacToe pGame);
     void createNewArrayOfCoordinates(ArrayList<ArrayList<int[]>> arrayToCheck, int[] inputCoordinates);
     void resetTurns();
+    String getGameChoice();
 }

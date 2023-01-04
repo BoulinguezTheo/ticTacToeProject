@@ -13,4 +13,5 @@ public interface ShowInterface {
     void displayDraw();
     void displayAskNewGame();
     void displayExit();
+    void displayGameChoice();
 }

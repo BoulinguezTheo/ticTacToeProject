@@ -20,13 +20,18 @@ public class UserInteraction implements UserInteractionInterface {
     Scanner setupPlayersScanner;
     Scanner moveScanner;
     Scanner newGameScanner;
+    Scanner gameChoiceScanner;
     ShowInterface printRequests;
 
     public UserInteraction(){
         setupPlayersScanner = new Scanner(System.in);
         moveScanner = new Scanner(System.in);
         newGameScanner = new Scanner(System.in);
+        gameChoiceScanner = new Scanner(System.in);
         printRequests = new ShowEn();
+    }
+    public String getGameChoice(){
+        return this.gameChoiceScanner.nextLine();
     }
     @Override
     public Player setupPlayers(String playerNth, String pSymbol){

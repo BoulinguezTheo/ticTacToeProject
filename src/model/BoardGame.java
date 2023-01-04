@@ -20,6 +20,7 @@ public class BoardGame implements GameInterface{
     public Cell[][] board;
     public int turns;
 
+    private int[] playersInput;
 
     public BoardGame(){
         turns = 0;
@@ -33,8 +34,14 @@ public class BoardGame implements GameInterface{
         return board;
     }
 
-    public void setOwner(int[] input, String pSymbol){
-        this.board[input[1]][input[0]].representation = pSymbol;
+    public void setPlayerInput(int[] pInput){
+        this.playersInput = pInput;
+    }
+    public int[] getPlayersInput(){
+        return this.playersInput;
+    }
+    public void setOwner(String pSymbol){
+        this.board[playersInput[1]][playersInput[0]].representation = pSymbol;
     }
 
     public int getTurns(){
