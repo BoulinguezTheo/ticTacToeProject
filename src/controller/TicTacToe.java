@@ -22,8 +22,10 @@ import src.vue.ShowInterface;
 import src.vue.UserInteractionInterface;
 
 public class TicTacToe implements GameControllerInterface {
-    private final int winCondition = 3;
-    private final int endGameByTurns = 9;
+    private final int WINCONDITION = 3;
+    private final int ENDGAMEBYTURNS = 9;
+    private final int TUPLEX = 0;
+    private final int TUPLEY = 1;
     private int sizeHeight;
     private int sizeLength;
     private Player player1;
@@ -32,7 +34,6 @@ public class TicTacToe implements GameControllerInterface {
     private GameFunction gameStateMachine;
     private UserInteractionInterface interaction;
     private ShowInterface printer;
-
     private GameInterface boardGame;
 
     public TicTacToe() {
@@ -124,8 +125,8 @@ public class TicTacToe implements GameControllerInterface {
         return inputPlayer;
     }
     public boolean  isBoxFilled(int[] input){
-        int inputColumn = input[1];
-        int inputLine = input[0];
+        int inputColumn = input[TUPLEY];
+        int inputLine = input[TUPLEX];
         if(boardGame.getBoardCell()[inputColumn][inputLine].representation == " "){
             return false;
         } else {
@@ -143,7 +144,7 @@ public class TicTacToe implements GameControllerInterface {
             printer.displayBoard(this.sizeLength, this.sizeHeight, boardGame.getBoardCell());
             printer.displayWinner(activePlayer.getSymbol());
             return GameFunction.ENDGAME;
-        } else if (this.boardGame.getTurns() == endGameByTurns){
+        } else if (this.boardGame.getTurns() == ENDGAMEBYTURNS){
             printer.displayBoard(this.sizeLength, this.sizeHeight, boardGame.getBoardCell());
             printer.displayDraw();
             return GameFunction.ENDGAME;
@@ -165,13 +166,13 @@ public class TicTacToe implements GameControllerInterface {
         int[] playersInput = this.boardGame.getPlayersInput();
         boolean entered = false;
         for(ArrayList<int[]> array : arrayToCheck){
-            int[] getTuple = array.get(0);
+            int[] getTuple = array.get(TUPLEX);
             int coordinateToFit = getTuple[coordinateToCheck];
             if(playersInput[coordinateToCheck] == coordinateToFit){
                 array.add(playersInput);
                 entered = true;
             }
-            if (array.size() == this.winCondition){
+            if (array.size() == this.WINCONDITION){
                 return true;
             }
         }
@@ -186,17 +187,17 @@ public class TicTacToe implements GameControllerInterface {
      */
     public boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign){
         int[] playersInput = this.boardGame.getPlayersInput();
-        int x = playersInput[0];
-        int y = playersInput[1];
+        int x = playersInput[TUPLEX];
+        int y = playersInput[TUPLEY];
         boolean entered = false;
         for(ArrayList<int[]> array : arrayToCheck){
             int[] getTuple = array.get(0);
-            int coordinateToFitX = (x - getTuple[0]);
-            int coordinateToFitY = sign * (y - getTuple[1]);
+            int coordinateToFitX = (x - getTuple[TUPLEX]);
+            int coordinateToFitY = sign * (y - getTuple[TUPLEY]);
             if(coordinateToFitX == coordinateToFitY){
                 array.add(playersInput);
             }
-            if (array.size() == this.winCondition){
+            if (array.size() == this.WINCONDITION){
                 return true;
             }
         }
