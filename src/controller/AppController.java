@@ -11,12 +11,14 @@ import src.vue.ShowEn;
 import src.vue.UserInteractionInterface;
 
 import java.util.ArrayList;
+import java.util.function.Function;
 
 public class AppController{
 
-    protected final String resetSymbol = " ";
+    private final String ticTacToe = "1";
+    private final String power4 = "2";
+    private final String gomuko = "3";
     protected ShowInterface printer;
-     //re
     protected GameControllerInterface game;
     public UserInteractionInterface interaction;
     protected GameState stateMachine;
@@ -26,106 +28,75 @@ public class AppController{
     public AppController(){
         this.printer = new ShowEn();
         this.interaction = new UserInteraction();
-        this.stateMachine = GameState.INSTANTIATEGAME;
+        this.stateMachine = GameState.CHOOSEGAME;
     }
 
     public void run(){
-        String gameChoice = askGameChoice();
+        String gameChoice = "1";
         while(stateMachine != GameState.EXIT){
             switch(stateMachine){
+                case CHOOSEGAME ->  {gameChoice = askGameChoice();
+                                    this.stateMachine = GameState.INSTANTIATEGAME;}
                 case INSTANTIATEGAME -> this.stateMachine = initGame(gameChoice);
                 case PLAYING -> this.stateMachine = play();
-                case NEWGAME -> ;
-                case EXIT -> ;
+                case NEWGAME -> this.stateMachine = askPlayAgain(true);
+                case EXIT -> System.out.println("");
             }
         }
-    }
+        this.printer.displayExit();
 
+    }
     private String askGameChoice() {
         this.printer.displayGameChoice();
-        String input = this.boardGame.getGameChoice();
+        String input = this.interaction.getGameChoice();
         boolean correctInput = false;
         while (!correctInput) {
             if (input.equalsIgnoreCase("1") || input.equalsIgnoreCase("2") || input.equalsIgnoreCase("3")){
                 correctInput = true;
             } else {
                 this.printer.displayGameChoice();
-                input = this.boardGame.getGameChoice();
+                input = this.interaction.getGameChoice();
             }
         }
         return input;
     }
-
     private GameState initGame(String pGameChoice){
         switch(pGameChoice){
-            case "1":
-                this.game = new TicTacToe();
+            case ticTacToe:
+                this.game = new TicTacToe(this.printer, this.interaction);
                 break;
-            case "2":
-                this.game = new TicTacToe2();
+            case power4:
+                this.game = new TicTacToe2(this.printer, this.interaction);
                 break;
-            case "3":
-                this.game = new TicTacToe3();
+            case gomuko:
+                this.game = new TicTacToe3(this.printer, this.interaction);
                 break;
         }
         return GameState.PLAYING;
     }
-
     private GameState play(){
-        this.game.playGame(this.interaction, this.printer);
+        return this.game.playGame(this.stateMachine);
     }
-
-//    public void play(GameControllerInterface pGame){
-//        while(stateMachine != GameFunction.EXIT){
-//            switch (stateMachine){
-//                case INITGAME:
-//                    stateMachine = this.initGameFunctions();
-//                    break;
-//                case PLAYGAME:
-//                    stateMachine = this.playGame();
-//                    break;
-//                case ENDGAME:
-//                    stateMachine = GameFunction.PLAYAGAIN;
-//                    break;
-//                case PLAYAGAIN:
-//                    stateMachine = this.treatPlayAgainChoice();
-//                    break;
-//                case RESETBOARD:
-//                    stateMachine = this.resetBoard(pGame.getSizeHeight(), pGame.getSizeLength());
-//                    break;
-//                case EXIT:
-//                    break;
-//            }
-//        }
-//        printer.displayExit();
-//    }
-////    public abstract void getValidMove();
-//    public int[] getPlayersInput(){
-//        return this.playersInput;
-//    }
-
-
-    public void resetCells(String pSymbolReset, int pSizeHeight, int pSizeLength){
-        for (int i = 0; i < pSizeHeight; i++){
-            for (int j = 0; j < pSizeLength; j++){
-                int[] resetCell = {j, i};
-                this.boardGame.setOwner(resetCell, pSymbolReset);
-            }
+    private GameState askPlayAgain(boolean function){
+        String newGame = correctNewGameEntry(function);
+        if (newGame.equalsIgnoreCase("y")){
+            return GameState.INSTANTIATEGAME;
         }
+        return askOtherGame();
+
     }
-//    public abstract boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck);
-//    public abstract boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign);
-    public GameFunction treatPlayAgainChoice(){
-        if (correctNewGameEntry().equalsIgnoreCase("y")){
-            return GameFunction.RESETBOARD;
+    public GameState askOtherGame(){
+        String otherGame = correctNewGameEntry(false);
+        if (otherGame.equalsIgnoreCase("y")){
+            return GameState.CHOOSEGAME;
         }
-        return GameFunction.EXIT;
+        return GameState.EXIT;
     }
-    public String correctNewGameEntry(){
+    public String correctNewGameEntry(boolean function){
         boolean correctEntry = false;
         String newGameChoice;
         do {
-            this.printer.displayAskNewGame();
+            displayNewGameOrOtherGame(function);
             newGameChoice = this.interaction.getPlayAgainChoice();
             if (newGameChoice.equalsIgnoreCase("Y") || newGameChoice.equalsIgnoreCase("N")) {
                 correctEntry = true;
@@ -133,12 +104,11 @@ public class AppController{
         } while (!correctEntry);
         return newGameChoice;
     }
-
-
-
-    public GameFunction resetBoard(int pHeight, int pLength){
-        resetCells(this.resetSymbol, pHeight, pLength);
-        this.boardGame.resetTurns();
-        return GameFunction.INITGAME;
+    private void displayNewGameOrOtherGame(boolean function){
+        if (function == true){
+            this.printer.displayAskNewGame();
+        } else {
+            this.printer.displayAskOtherGame();
+        }
     }
 }

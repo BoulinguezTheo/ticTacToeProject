@@ -10,28 +10,26 @@ import java.util.ArrayList;
 public interface GameControllerInterface {
 
 
-
-    void setPlayersInput(int[] pInput);
-    protected GameFunction initGameFunctions(UserInteractionInterface pInteractor, ShowInterface pPrinter)
-    Player[] createPlayers(UserInteractionInterface pInteractor);
+    GameFunction initGameFunctions();
+    Player[] createPlayers();
     Cell[][] initCells();
-    GameState playGame(UserInteractionInterface pInteractor, ShowInterface pPrinter);
-    Player addTurnSetActivePlayerDisplayBoard(UserInteractionInterface pInteractor, ShowInterface pPrinter);
-    GameFunction moveValidAndSetStateMachine(UserInteractionInterface pInteractor, ShowInterface pPrinter);
-    int[] getValidMove(ShowInterface pPrinter, UserInteractionInterface pInteractor);
-    boolean  isBoxFilled(int[] input, UserInteractionInterface pInteractor);
-    GameFunction resetBoard(int pHeight, int pLength);
-    void getValidMove();
-    void resetCells(String pSymbolReset, int pSizeHeight, int pSizeLength);
+    GameState playGame(GameState pStateMachine);
+    Player addTurnSetActivePlayerDisplayBoard();
+    GameFunction moveValidAndSetStateMachine();
+    int[] getValidMove();
+    boolean  isBoxFilled(int[] input);
     boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck);
     boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign);
-    GameFunction isGameOver(ShowInterface pPrinter);
-    GameFunction treatPlayAgainChoice();
-    String correctNewGameEntry();
+    GameFunction isGameOver();
 
-    int getSizeHeight();
-
-    int getSizeLength();
-
-    GameState playGame();
+//    GameFunction resetBoard(int pHeight, int pLength);
+//    void getValidMove();
+//    void resetCells(String pSymbolReset, int pSizeHeight, int pSizeLength);
+//    GameFunction treatPlayAgainChoice();
+//
+//    int getSizeHeight();
+//
+//    int getSizeLength();
+//
+//    GameState playGame();
 }

@@ -12,8 +12,6 @@
  */
 package src.controller;
 
-import java.util.ArrayList;
-
 import src.model.BoardGame;
 import src.model.Cell;
 import src.model.GameInterface;
@@ -21,7 +19,9 @@ import src.model.Player;
 import src.vue.ShowInterface;
 import src.vue.UserInteractionInterface;
 
-public class TicTacToe implements GameControllerInterface {
+import java.util.ArrayList;
+
+public class TicTacToe3 implements GameControllerInterface {
     private final int winCondition = 3;
     private final int endGameByTurns = 9;
     private int sizeHeight;
@@ -35,7 +35,7 @@ public class TicTacToe implements GameControllerInterface {
 
     private GameInterface boardGame;
 
-    public TicTacToe() {
+    public TicTacToe3() {
         //Initiate variables
         this.sizeHeight = 3;
         this.sizeLength = 3;
@@ -44,7 +44,7 @@ public class TicTacToe implements GameControllerInterface {
         //boardGame.setBoardCell(super.initCells(this.sizeHeight, this.sizeLength));
         this.gameStateMachine = GameFunction.INITGAME;
     }
-    public TicTacToe(ShowInterface pPrinter, UserInteractionInterface pInteraction) {
+    public TicTacToe3(ShowInterface pPrinter, UserInteractionInterface pInteraction) {
         //Initiate variables
         this.sizeHeight = 3;
         this.sizeLength = 3;

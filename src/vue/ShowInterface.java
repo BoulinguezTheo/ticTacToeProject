@@ -12,6 +12,7 @@ public interface ShowInterface {
     void displayWinner(String winner);
     void displayDraw();
     void displayAskNewGame();
+    void displayAskOtherGame();
     void displayExit();
     void displayGameChoice();
 }

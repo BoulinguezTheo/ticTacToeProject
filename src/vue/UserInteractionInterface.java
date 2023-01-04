@@ -13,5 +13,6 @@ public interface UserInteractionInterface {
 
     String getPlayAgainChoice();
     String getGameChoice();
+    String getAksOtherGame();
 
 }

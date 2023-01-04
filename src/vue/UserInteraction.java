@@ -30,6 +30,7 @@ public class UserInteraction implements UserInteractionInterface {
         gameChoiceScanner = new Scanner(System.in);
         printRequests = new ShowEn();
     }
+    @Override
     public String getGameChoice(){
         return this.gameChoiceScanner.nextLine();
     }
@@ -59,6 +60,9 @@ public class UserInteraction implements UserInteractionInterface {
     }
     @Override
     public String getPlayAgainChoice(){
+        return newGameScanner.nextLine();
+    }
+    public String getAksOtherGame(){
         return newGameScanner.nextLine();
     }
 

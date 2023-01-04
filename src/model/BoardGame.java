@@ -11,10 +11,8 @@
  * Copyright     : moi
  */
 package src.model;
-
 import java.util.ArrayList;
-
-import src.controller.TicTacToe;
+import src.controller.GameControllerInterface;
 
 public class BoardGame implements GameInterface{
     public Cell[][] board;
@@ -58,7 +56,7 @@ public class BoardGame implements GameInterface{
     /**
      *  Traite les coordonnées jouées pour les lignes et colonnes possibles pour gagner la partie.
      */
-    public boolean processInputColumnLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck, int[] inputCoordinates, TicTacToe pGame){
+    public boolean processInputColumnLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck, int[] inputCoordinates, GameControllerInterface pGame){
         if (arrayToCheck.size() == 0){
             createNewArrayOfCoordinates(arrayToCheck, inputCoordinates);
             return false;
@@ -69,7 +67,7 @@ public class BoardGame implements GameInterface{
     /**
      *  Traite les coordonnées jouées pour les diagonales possibles pour gagner la partie.
      */
-    public boolean processInputDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign, int[] inputCoordinates,TicTacToe pGame){
+    public boolean processInputDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign, int[] inputCoordinates, GameControllerInterface pGame){
         if (arrayToCheck.size() == 0){
             createNewArrayOfCoordinates(arrayToCheck, inputCoordinates);
             return false;

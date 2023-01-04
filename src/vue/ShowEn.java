@@ -74,6 +74,10 @@ public class ShowEn implements ShowInterface {
     System.out.println("Do you want to play again? (Y / N)");
   }
   @Override
+  public void displayAskOtherGame(){
+    System.out.println("Do you want to play another game? (Y/N)");
+  }
+  @Override
   public void displayExit(){
     System.out.println("Thanks for playing.");
     System.out.println("Bye bye, baby! \uD83D\uDC4B");
