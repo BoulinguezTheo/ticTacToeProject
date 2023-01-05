@@ -50,9 +50,6 @@ public class BoardGame implements GameInterface{
         this.turns++;
     }
 
-    public void resetTurns(){
-        this.turns = 0;
-    }
     /**
      *  Traite les coordonnées jouées pour les lignes et colonnes possibles pour gagner la partie.
      */

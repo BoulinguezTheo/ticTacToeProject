@@ -23,4 +23,8 @@ public class Cell {
     public String getCell(){
         return this.LeftPart + this.representation + this.RightPart;
     }
+
+    public String getRepresentation(){
+        return this.representation;
+    }
 }

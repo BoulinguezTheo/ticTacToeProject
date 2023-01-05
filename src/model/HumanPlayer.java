@@ -10,8 +10,6 @@
  * Copyright     : moi
  */
 package src.model;
-
-import src.vue.UserInteraction;
 import src.vue.UserInteractionInterface;
 
 public class HumanPlayer extends Player{
@@ -22,7 +20,7 @@ public class HumanPlayer extends Player{
         this.symbol = pSymbol;
     }
     @Override
-    public String getType(){
+    public String getTYPE(){
         return this.type ;
     }
 

@@ -3,7 +3,7 @@ import src.model.Player;
 
 public interface UserInteractionInterface {
 
-    Player setupPlayers(String playerNth, String pSymbol);
+    Player setupPlayers(String playerNth, String pSymbol, ShowInterface pPrinter);
 
     String askPlayerMove(String coordinate);
 

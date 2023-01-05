@@ -32,15 +32,14 @@ public class AppController{
     }
 
     public void run(){
-        String gameChoice = "1";
+        String gameChoice = "0";
         while(stateMachine != GameState.EXIT){
             switch(stateMachine){
-                case CHOOSEGAME ->  {gameChoice = askGameChoice();
-                                    this.stateMachine = GameState.INSTANTIATEGAME;}
+                case CHOOSEGAME ->  {gameChoice = askGameChoice(); this.stateMachine = GameState.INSTANTIATEGAME;}
                 case INSTANTIATEGAME -> this.stateMachine = initGame(gameChoice);
                 case PLAYING -> this.stateMachine = play();
                 case NEWGAME -> this.stateMachine = askPlayAgain(true);
-                case EXIT -> System.out.println("");
+                case EXIT -> System.out.println();
             }
         }
         this.printer.displayExit();
@@ -83,7 +82,6 @@ public class AppController{
             return GameState.INSTANTIATEGAME;
         }
         return askOtherGame();
-
     }
     public GameState askOtherGame(){
         String otherGame = correctNewGameEntry(false);

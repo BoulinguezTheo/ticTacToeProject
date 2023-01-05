@@ -60,7 +60,7 @@ public class TicTacToe2 implements GameControllerInterface {
         while (this.gameStateMachine != GameFunction.EXIT) {
             switch (this.gameStateMachine) {
                 case INITGAME:
-                    this.gameStateMachine = initGameFunctions();
+                    this.gameStateMachine = initGame();
                     break;
                 case PLAY:
                     this.gameStateMachine = play();
@@ -75,20 +75,13 @@ public class TicTacToe2 implements GameControllerInterface {
         return GameState.NEWGAME;
     }
     @Override
-    public GameFunction initGameFunctions() {
+    public GameFunction initGame() {
         //Setup players
-        Player[] players = createPlayers();
-        this.player1 = players[0];
-        this.player2 = players[1];
+        this.player1 = interaction.setupPlayers("1st", "X", this.printer);
+        this.player2 = interaction.setupPlayers("2nd", "O", this.printer);
         //SetupBoardGame
         boardGame.setBoardCell(initCells());
         return GameFunction.PLAY;
-    }
-    @Override
-    public Player[] createPlayers(){
-        Player playerOne = interaction.setupPlayers("1st", "X");
-        Player playerTwo = interaction.setupPlayers("2nd", "O");
-        return new Player[]{playerOne, playerTwo};
     }
     @Override
     public Cell[][] initCells(){
@@ -129,7 +122,7 @@ public class TicTacToe2 implements GameControllerInterface {
         if(boardGame.getBoardCell()[inputColumn][inputLine].representation == " "){
             return false;
         } else {
-            if (this.activePlayer.getType().equals("Human")){
+            if (this.activePlayer.getTYPE().equals("Human")){
                 interaction.getDisplayBoxIsFilled();
             }
             return true;

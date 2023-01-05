@@ -12,6 +12,7 @@
 package src.model;
 import java.util.ArrayList;
 
+import src.vue.ShowInterface;
 import src.vue.UserInteraction;
 import src.vue.UserInteractionInterface;
 
@@ -23,17 +24,17 @@ public abstract class Player {
     String symbol;
 
     public Player (){
-        lineArrays = new ArrayList<ArrayList<int[]>>();
-        columnArrays = new ArrayList<ArrayList<int[]>>();
-        diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
-        diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
+        lineArrays = new ArrayList<>();
+        columnArrays = new ArrayList<>();
+        diagXMinusOneArrays = new ArrayList<>();
+        diagXPlusOneArrays = new ArrayList<>();
     }
     public Player(String pSymbol) {
         this.symbol = pSymbol;
-        ArrayList<ArrayList<int[]>> lineArrays = new ArrayList<ArrayList<int[]>>();
-        ArrayList<ArrayList<int[]>>columnArrays = new ArrayList<ArrayList<int[]>>();
-        ArrayList<ArrayList<int[]>>diagXMinusOneArrays = new ArrayList<ArrayList<int[]>>();
-        ArrayList<ArrayList<int[]>>diagXPlusOneArrays = new ArrayList<ArrayList<int[]>>();
+        ArrayList<ArrayList<int[]>> lineArrays = new ArrayList<>();
+        ArrayList<ArrayList<int[]>> columnArrays = new ArrayList<>();
+        ArrayList<ArrayList<int[]>> diagXMinusOneArrays = new ArrayList<>();
+        ArrayList<ArrayList<int[]>> diagXPlusOneArrays = new ArrayList<>();
     }
     public abstract int[] getMoveFromPlayer(UserInteractionInterface interactor);
     public int[] askPlayerInput(UserInteractionInterface interactor) {
@@ -79,6 +80,6 @@ public abstract class Player {
         return diagXPlusOneArrays;
     }
 
-    abstract public String getType();
+    abstract public String getTYPE();
 }
 

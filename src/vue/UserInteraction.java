@@ -35,10 +35,10 @@ public class UserInteraction implements UserInteractionInterface {
         return this.gameChoiceScanner.nextLine();
     }
     @Override
-    public Player setupPlayers(String playerNth, String pSymbol){
+    public Player setupPlayers(String playerNth, String pSymbol, ShowInterface pPrinter){
         String player;
         do {
-            this.printRequests.playersTypeChoice(playerNth, pSymbol);
+            pPrinter.playersTypeChoice(playerNth, pSymbol);
             player = this.setupPlayersScanner.nextLine();
         }while (!player.equals("1") && !player.equals("2"));
         //Need close scanner but don't know where

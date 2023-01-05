@@ -13,19 +13,18 @@ package src.model;
 
 import java.util.Random;
 
-import src.vue.UserInteraction;
 import src.vue.UserInteractionInterface;
 
 public class ArtificialPlayer extends Player {
     private String symbol;
-    final protected String type = "Bot";
+    final protected String TYPE = "Bot";
 
     public ArtificialPlayer(String pSymbol){
         this.symbol = pSymbol;
     }
     @Override
-    public String getType(){
-        return this.type;
+    public String getTYPE(){
+        return this.TYPE;
     }
 
     @Override
