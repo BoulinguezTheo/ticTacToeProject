@@ -12,19 +12,22 @@
 package src.model;
 
 public class Cell {
-    private final String LeftPart;
-    private final String RightPart;
+    private final String leftPart;
+    private final String rightPart;
     public String representation;
     public Cell(){
-        this.LeftPart = "| ";
+        this.leftPart = "| ";
         this.representation = " ";
-        this.RightPart = " ";
+        this.rightPart = " ";
     }
     public String getCell(){
-        return this.LeftPart + this.representation + this.RightPart;
+        return this.leftPart + this.representation + this.rightPart;
     }
 
     public String getRepresentation(){
         return this.representation;
+    }
+    protected void setRepresentation(String pRepresentation){
+        this.representation = pRepresentation;
     }
 }

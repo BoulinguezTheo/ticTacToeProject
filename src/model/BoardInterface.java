@@ -2,7 +2,7 @@ package src.model;
 import src.controller.GameControllerInterface;
 import java.util.ArrayList;
 
-public interface GameInterface {
+public interface BoardInterface {
     void setBoardCell(Cell[][] pBoard);
 
     Cell[][] getBoardCell();

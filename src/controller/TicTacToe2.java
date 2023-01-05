@@ -12,9 +12,10 @@
  */
 package src.controller;
 
+import src.Factory;
 import src.model.BoardGame;
 import src.model.Cell;
-import src.model.GameInterface;
+import src.model.BoardInterface;
 import src.model.Player;
 import src.vue.ShowInterface;
 import src.vue.UserInteractionInterface;
@@ -33,7 +34,7 @@ public class TicTacToe2 implements GameControllerInterface {
     private UserInteractionInterface interaction;
     private ShowInterface printer;
 
-    private GameInterface boardGame;
+    private BoardInterface boardGame;
 
     public TicTacToe2() {
         //Initiate variables
@@ -77,11 +78,16 @@ public class TicTacToe2 implements GameControllerInterface {
     @Override
     public GameFunction initGame() {
         //Setup players
-        this.player1 = interaction.setupPlayers("1st", "X", this.printer);
-        this.player2 = interaction.setupPlayers("2nd", "O", this.printer);
+        String symbolPlayer1 = "X";
+        String symbolPlayer2 = "O";
+        this.player1 = createPlayer(interaction.askPlayerType("1st", symbolPlayer1, this), symbolPlayer1);
+        this.player2 = createPlayer(interaction.askPlayerType("2nd", symbolPlayer2, this), symbolPlayer2);
         //SetupBoardGame
         boardGame.setBoardCell(initCells());
         return GameFunction.PLAY;
+    }
+    public Player createPlayer(String pPlayer, String pSymbol){
+        return (pPlayer.equals("1")) ? Factory.createHumanPlayer(pSymbol) : Factory.createArtificialPlayer(pSymbol);
     }
     @Override
     public Cell[][] initCells(){
@@ -112,7 +118,7 @@ public class TicTacToe2 implements GameControllerInterface {
         int[] inputPlayer;
         printer.displayPlayerTurn(this.activePlayer.getSymbol());
         do {
-            inputPlayer = this.activePlayer.getMoveFromPlayer(interaction);
+            inputPlayer = this.activePlayer.getMoveFromPlayer(interaction, printer);
         } while (isBoxFilled(inputPlayer));
         return inputPlayer;
     }
@@ -122,8 +128,8 @@ public class TicTacToe2 implements GameControllerInterface {
         if(boardGame.getBoardCell()[inputColumn][inputLine].representation == " "){
             return false;
         } else {
-            if (this.activePlayer.getTYPE().equals("Human")){
-                interaction.getDisplayBoxIsFilled();
+            if (this.activePlayer.getType().equals("Human")){
+                this.printer.displayBoxIsFilled();
             }
             return true;
         }
@@ -144,7 +150,7 @@ public class TicTacToe2 implements GameControllerInterface {
         return GameFunction.PLAY;
     }
 
-    private boolean isWinner(){
+    public boolean isWinner(){
         return boardGame.processInputColumnLines(activePlayer.getLineArrays(), 0, this.boardGame.getPlayersInput(), this)
                 || boardGame.processInputColumnLines(activePlayer.getColumnArrays(), 1, this.boardGame.getPlayersInput(), this)
                 || boardGame.processInputDiags(activePlayer.getDiagXMinusOneArrays(), -1, this.boardGame.getPlayersInput(), this)
@@ -199,11 +205,8 @@ public class TicTacToe2 implements GameControllerInterface {
         return false;
     }
 
-    public int getSizeHeight(){
-        return this.sizeHeight;
-    }
-    public int getSizeLength(){
-        return this.sizeLength;
+    public void getPlayerTypeChoice(String playerNth, String pSymbol){
+        this.printer.displayPlayersTypeChoice(playerNth,pSymbol);
     }
 
 

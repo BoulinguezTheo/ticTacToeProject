@@ -13,22 +13,23 @@ package src.model;
 
 import java.util.Random;
 
+import src.vue.ShowInterface;
 import src.vue.UserInteractionInterface;
 
 public class ArtificialPlayer extends Player {
-    private String symbol;
+
     final protected String TYPE = "Bot";
 
     public ArtificialPlayer(String pSymbol){
-        this.symbol = pSymbol;
+        super.symbol = pSymbol;
     }
     @Override
-    public String getTYPE(){
+    public String getType(){
         return this.TYPE;
     }
 
     @Override
-    public int[] getMoveFromPlayer(UserInteractionInterface interactor) {
+    public int[] getMoveFromPlayer(UserInteractionInterface interactor, ShowInterface pPrinter) {
         //Check if box is occupied
         int [] playerEntries = generateRandomInputs();
         return playerEntries;

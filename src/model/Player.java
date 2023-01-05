@@ -13,7 +13,6 @@ package src.model;
 import java.util.ArrayList;
 
 import src.vue.ShowInterface;
-import src.vue.UserInteraction;
 import src.vue.UserInteractionInterface;
 
 public abstract class Player {
@@ -36,30 +35,31 @@ public abstract class Player {
         ArrayList<ArrayList<int[]>> diagXMinusOneArrays = new ArrayList<>();
         ArrayList<ArrayList<int[]>> diagXPlusOneArrays = new ArrayList<>();
     }
-    public abstract int[] getMoveFromPlayer(UserInteractionInterface interactor);
-    public int[] askPlayerInput(UserInteractionInterface interactor) {
+    public abstract int[] getMoveFromPlayer(UserInteractionInterface interactor, ShowInterface pPrinter);
+    public int[] askPlayerInput(UserInteractionInterface interactor, ShowInterface pPrinter) {
         boolean validColumn, validLine;
         String column, line;
 
         //Check if column input is valid
         do {
             column = interactor.askPlayerMove("column");
-            validColumn = validInputUser(column, "column", interactor);
+            validColumn = validInputUser(column, pPrinter);
         } while (!validColumn);
 
         //Check if line input is valid
         do {
+            pPrinter.displayPlayerMoveChoice("line");
             line = interactor.askPlayerMove("line");
-            validLine = validInputUser(line, "line", interactor);
+            validLine = validInputUser(line, pPrinter);
         } while (!validLine);
 
         return new int[]{Integer.parseInt(column), Integer.parseInt(line)};
     }
 
-    public boolean  validInputUser(String input, String typeInput, UserInteractionInterface interactor ) {
+    public boolean  validInputUser(String input, ShowInterface pPrinter ) {
         //Check if the input is valid
         if (!input.equals("0") && !input.equals("1") && !input.equals("2")) {
-            interactor.getDisplayInputError(); 
+            pPrinter.displayInputError();
             return false;
         }
         return true; 
@@ -80,6 +80,6 @@ public abstract class Player {
         return diagXPlusOneArrays;
     }
 
-    abstract public String getTYPE();
+    abstract public String getType();
 }
 

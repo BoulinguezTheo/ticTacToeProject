@@ -12,6 +12,7 @@
 package src.vue;
 import java.util.Scanner;
 
+import src.controller.GameControllerInterface;
 import src.model.ArtificialPlayer;
 import src.model.HumanPlayer;
 import src.model.Player;
@@ -28,43 +29,31 @@ public class UserInteraction implements UserInteractionInterface {
         moveScanner = new Scanner(System.in);
         newGameScanner = new Scanner(System.in);
         gameChoiceScanner = new Scanner(System.in);
-        printRequests = new ShowEn();
     }
     @Override
     public String getGameChoice(){
         return this.gameChoiceScanner.nextLine();
     }
     @Override
-    public Player setupPlayers(String playerNth, String pSymbol, ShowInterface pPrinter){
+    public String askPlayerType(String playerNth, String pSymbol, GameControllerInterface pController){
         String player;
         do {
-            pPrinter.playersTypeChoice(playerNth, pSymbol);
+            pController.getPlayerTypeChoice(playerNth, pSymbol);
             player = this.setupPlayersScanner.nextLine();
         }while (!player.equals("1") && !player.equals("2"));
         //Need close scanner but don't know where
-        return (player.equals("1")) ? new HumanPlayer(pSymbol) : new ArtificialPlayer(pSymbol);
+        return player;
     }
     @Override
     public String askPlayerMove(String coordinate){
-        this.printRequests.playerMoveChoice(coordinate);
         return moveScanner.nextLine();
         //Need close scanner but don't know where
-    }
-    @Override
-    public void getDisplayInputError(){
-        this.printRequests.displayInputError();
-    }
-    @Override
-    public void getDisplayBoxIsFilled(){
-        this.printRequests.boxIsFilled();
     }
     @Override
     public String getPlayAgainChoice(){
         return newGameScanner.nextLine();
     }
-    public String getAksOtherGame(){
-        return newGameScanner.nextLine();
-    }
+
 
 
 }

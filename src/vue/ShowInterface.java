@@ -4,10 +4,10 @@ import src.model.Cell;
 
 public interface ShowInterface {
     void displayBoard(int length, int height, Cell[][] cellsBoard);
-    void playersTypeChoice(String playerNth, String pSymbol);
-    void playerMoveChoice(String coordinate);
+    void displayPlayersTypeChoice(String playerNth, String pSymbol);
+    void displayPlayerMoveChoice(String coordinate);
     void displayInputError();
-    void boxIsFilled();
+    void displayBoxIsFilled();
     void displayPlayerTurn(String pSymbolPlayer);
     void displayWinner(String winner);
     void displayDraw();

@@ -1,33 +1,27 @@
 package src.controller;
 
 
-import src.model.BoardGame;
-import src.model.Cell;
-import src.model.GameInterface;
-import src.model.Player;
+import src.Factory;
 import src.vue.ShowInterface;
 import src.vue.UserInteraction;
 import src.vue.ShowEn;
 import src.vue.UserInteractionInterface;
 
-import java.util.ArrayList;
-import java.util.function.Function;
-
 public class AppController{
 
-    private final String ticTacToe = "1";
-    private final String power4 = "2";
-    private final String gomuko = "3";
-    protected ShowInterface printer;
-    protected GameControllerInterface game;
-    public UserInteractionInterface interaction;
-    protected GameState stateMachine;
+    private final String TICTACTOE = "1";
+    private final String POWER4 = "2";
+    private final String GOMUKO = "3";
+    private ShowInterface printer;
+    private GameControllerInterface game;
+    private UserInteractionInterface interaction;
+    private GameState stateMachine;
 
 
     
     public AppController(){
-        this.printer = new ShowEn();
-        this.interaction = new UserInteraction();
+        this.printer = Factory.createPrinterEn();
+        this.interaction = Factory.createInterator();
         this.stateMachine = GameState.CHOOSEGAME;
     }
 
@@ -43,7 +37,6 @@ public class AppController{
             }
         }
         this.printer.displayExit();
-
     }
     private String askGameChoice() {
         this.printer.displayGameChoice();
@@ -61,13 +54,13 @@ public class AppController{
     }
     private GameState initGame(String pGameChoice){
         switch(pGameChoice){
-            case ticTacToe:
+            case TICTACTOE:
                 this.game = new TicTacToe(this.printer, this.interaction);
                 break;
-            case power4:
+            case POWER4:
                 this.game = new TicTacToe2(this.printer, this.interaction);
                 break;
-            case gomuko:
+            case GOMUKO:
                 this.game = new TicTacToe3(this.printer, this.interaction);
                 break;
         }
@@ -83,14 +76,14 @@ public class AppController{
         }
         return askOtherGame();
     }
-    public GameState askOtherGame(){
+    private GameState askOtherGame(){
         String otherGame = correctNewGameEntry(false);
         if (otherGame.equalsIgnoreCase("y")){
             return GameState.CHOOSEGAME;
         }
         return GameState.EXIT;
     }
-    public String correctNewGameEntry(boolean function){
+    private String correctNewGameEntry(boolean function){
         boolean correctEntry = false;
         String newGameChoice;
         do {
@@ -103,7 +96,7 @@ public class AppController{
         return newGameChoice;
     }
     private void displayNewGameOrOtherGame(boolean function){
-        if (function == true){
+        if (function){
             this.printer.displayAskNewGame();
         } else {
             this.printer.displayAskOtherGame();

@@ -40,13 +40,13 @@ public class ShowEn implements ShowInterface {
     }
   }
   @Override
-  public void playersTypeChoice(String playerNth, String pSymbol) {
+  public void displayPlayersTypeChoice(String playerNth, String pSymbol) {
     System.out.println("-Press 1 for a human player");
     System.out.println("-Press 2 for an artificial player");
     System.out.print("Setup " + playerNth + " player: ");
   }
   @Override
-  public void playerMoveChoice(String coordinate) {
+  public void displayPlayerMoveChoice(String coordinate) {
     System.out.print("Enter " + coordinate + ": ");
   }
   @Override
@@ -54,7 +54,7 @@ public class ShowEn implements ShowInterface {
     System.out.println("Error: please try again");
   }
   @Override
-  public void boxIsFilled() {
+  public void displayBoxIsFilled() {
     System.out.println("Box already filled, please try again");
   }
   @Override

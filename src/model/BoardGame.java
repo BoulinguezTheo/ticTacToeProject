@@ -14,7 +14,7 @@ package src.model;
 import java.util.ArrayList;
 import src.controller.GameControllerInterface;
 
-public class BoardGame implements GameInterface{
+public class BoardGame implements BoardInterface {
     public Cell[][] board;
     public int turns;
 
@@ -39,7 +39,7 @@ public class BoardGame implements GameInterface{
         return this.playersInput;
     }
     public void setOwner(String pSymbol){
-        this.board[playersInput[1]][playersInput[0]].representation = pSymbol;
+        this.board[playersInput[1]][playersInput[0]].setRepresentation(pSymbol);
     }
 
     public int getTurns(){
@@ -76,7 +76,7 @@ public class BoardGame implements GameInterface{
      *  Créer un nouvel array si la coordonnée du coup n'appartient pas à une diagonale, ligne ou colonne possible.
      */
     public void createNewArrayOfCoordinates(ArrayList<ArrayList<int[]>> arrayToCheck, int[] inputCoordinates){
-        ArrayList<int[]> array = new ArrayList<int[]>();
+        ArrayList<int[]> array = new ArrayList<>();
         array.add(inputCoordinates);
         arrayToCheck.add(array);
     }

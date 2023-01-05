@@ -1,18 +1,13 @@
 package src.vue;
-import src.model.Player;
+import src.controller.GameControllerInterface;
 
 public interface UserInteractionInterface {
 
-    Player setupPlayers(String playerNth, String pSymbol, ShowInterface pPrinter);
+    String askPlayerType(String playerNth, String pSymbol, GameControllerInterface pController);
 
     String askPlayerMove(String coordinate);
 
-    void getDisplayInputError();
-
-    void getDisplayBoxIsFilled();
-
     String getPlayAgainChoice();
     String getGameChoice();
-    String getAksOtherGame();
 
 }
