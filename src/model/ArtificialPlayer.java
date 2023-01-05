@@ -27,15 +27,8 @@ public class ArtificialPlayer extends Player {
     public String getType(){
         return this.TYPE;
     }
-
     @Override
-    public int[] getMoveFromPlayer(UserInteractionInterface interactor, ShowInterface pPrinter) {
-        //Check if box is occupied
-        int [] playerEntries = generateRandomInputs();
-        return playerEntries;
-    }
-
-    private int[] generateRandomInputs(){
+    public int[] playMove(){
         Random randomInt = new Random();
         int column = randomInt.nextInt(0, 3);
         int line = randomInt.nextInt(0, 3);

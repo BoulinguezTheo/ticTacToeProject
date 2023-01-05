@@ -12,9 +12,6 @@
 package src.model;
 import java.util.ArrayList;
 
-import src.vue.ShowInterface;
-import src.vue.UserInteractionInterface;
-
 public abstract class Player {
     private ArrayList<ArrayList<int[]>> lineArrays;
     private ArrayList<ArrayList<int[]>> columnArrays;
@@ -30,40 +27,12 @@ public abstract class Player {
     }
     public Player(String pSymbol) {
         this.symbol = pSymbol;
-        ArrayList<ArrayList<int[]>> lineArrays = new ArrayList<>();
-        ArrayList<ArrayList<int[]>> columnArrays = new ArrayList<>();
-        ArrayList<ArrayList<int[]>> diagXMinusOneArrays = new ArrayList<>();
-        ArrayList<ArrayList<int[]>> diagXPlusOneArrays = new ArrayList<>();
+        this.lineArrays = new ArrayList<>();
+        this.columnArrays = new ArrayList<>();
+        this.diagXMinusOneArrays = new ArrayList<>();
+        this.diagXPlusOneArrays = new ArrayList<>();
     }
-    public abstract int[] getMoveFromPlayer(UserInteractionInterface interactor, ShowInterface pPrinter);
-    public int[] askPlayerInput(UserInteractionInterface interactor, ShowInterface pPrinter) {
-        boolean validColumn, validLine;
-        String column, line;
-
-        //Check if column input is valid
-        do {
-            column = interactor.askPlayerMove("column");
-            validColumn = validInputUser(column, pPrinter);
-        } while (!validColumn);
-
-        //Check if line input is valid
-        do {
-            pPrinter.displayPlayerMoveChoice("line");
-            line = interactor.askPlayerMove("line");
-            validLine = validInputUser(line, pPrinter);
-        } while (!validLine);
-
-        return new int[]{Integer.parseInt(column), Integer.parseInt(line)};
-    }
-
-    public boolean  validInputUser(String input, ShowInterface pPrinter ) {
-        //Check if the input is valid
-        if (!input.equals("0") && !input.equals("1") && !input.equals("2")) {
-            pPrinter.displayInputError();
-            return false;
-        }
-        return true; 
-    }
+    public abstract int[] playMove();
     public String getSymbol(){
         return this.symbol;
     }

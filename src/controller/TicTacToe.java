@@ -13,6 +13,7 @@
 package src.controller;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import src.Factory;
 import src.model.*;
@@ -41,6 +42,9 @@ public class TicTacToe implements GameControllerInterface {
         this.printer = pPrinter;
         this.interaction = pInteraction;
     }
+    /**
+     *  Switch states as the game progresses
+     */
     @Override
     public GameState playGame(GameState pStateMachine) {
         while (this.gameStateMachine != GameFunction.EXIT) {
@@ -60,6 +64,9 @@ public class TicTacToe implements GameControllerInterface {
         }
         return GameState.NEWGAME;
     }
+    /**
+     *  Instantiate players, instantiate the board and switch state to the next
+     */
     @Override
     public GameFunction initGame() {
         //Setup players
@@ -71,10 +78,18 @@ public class TicTacToe implements GameControllerInterface {
         boardGame.setBoardCell(initCells());
         return GameFunction.PLAY;
     }
+    /**
+     *  Creates one player of the type required by the user
+     * @param pPlayer -> player type
+     * @param pSymbol -> symbol assigned to the player
+     */
     @Override
     public Player createPlayer(String pPlayer, String pSymbol){
         return (pPlayer.equals("1")) ? Factory.createHumanPlayer(pSymbol) : Factory.createArtificialPlayer(pSymbol);
     }
+    /**
+     *  Create the board array composed by Cell objects
+     */
     @Override
     public Cell[][] initCells(){
         var cells = Factory.createCellBoard(this.SIZELENGTH, this.SIZEHEIGHT);
@@ -85,31 +100,84 @@ public class TicTacToe implements GameControllerInterface {
         }
         return cells;
     }
+    /**
+     *  set the active player for the turn and initiate a sequence of functions which compose a full turn for one player
+     *  returns the state of the game, same state if game not over, next state of game if game over
+     */
     @Override
     public GameFunction play(){
-        this.activePlayer = addTurnSetActivePlayerDisplayBoard();
+        this.activePlayer = addTurnSetDisplayBoardSetActivePlayer();
         return moveValidAndSetStateMachine();
     }
-    public Player addTurnSetActivePlayerDisplayBoard() {
+    /**
+     *  Adds a turn to the turn iterator, displays the board at the beginning of a turn and returns the active player for the turn
+     */
+    public Player addTurnSetDisplayBoardSetActivePlayer() {
         this.boardGame.addTurn();
         printer.displayBoard(this.SIZELENGTH, this.SIZEHEIGHT, this.boardGame.getBoardCell());
         return (this.activePlayer == this.player1) ? this.player2 : this.player1;
     }
+    /**
+     *  Gets the move played, set the move in the board and returns if the game is over
+     */
     @Override
     public GameFunction moveValidAndSetStateMachine(){
-        this.boardGame.setPlayerInput(getValidMove());
+        this.boardGame.setPlayerInput(getAvailableMove());
         this.boardGame.setOwner(this.activePlayer.getSymbol());
         return isGameOver();
     }
+    /**
+     *  Displays which player is to play, makes sure the move is valid and returns coordinates of the move played
+     */
     @Override
-    public int[] getValidMove(){
+    public int[] getAvailableMove(){
         int[] inputPlayer;
         printer.displayPlayerTurn(this.activePlayer.getSymbol());
         do {
-            inputPlayer = this.activePlayer.getMoveFromPlayer(interaction, printer);
+            inputPlayer = getMove();
         } while (isBoxFilled(inputPlayer));
         return inputPlayer;
     }
+    public int[] getMove(){
+        return this.activePlayer.getType().equalsIgnoreCase("bot") ? generateRandomInput() : getValidPlayerInput();
+    }
+    public int[] generateRandomInput(){
+        Random randomInt = new Random();
+        int column = randomInt.nextInt(0, 3);
+        int line = randomInt.nextInt(0, 3);
+        return new int[] {column, line};
+    }
+    public int[] getValidPlayerInput() {
+        boolean validColumn, validLine;
+        String column, line;
+
+        //Check if column input is valid
+        do {
+            printer.displayPlayerMoveChoice("column");
+            column = interaction.askPlayerMove("column");
+            validColumn = validInputUser(column);
+        } while (!validColumn);
+
+        //Check if line input is valid
+        do {
+            printer.displayPlayerMoveChoice("line");
+            line = interaction.askPlayerMove("line");
+            validLine = validInputUser(line);
+        } while (!validLine);
+
+        return new int[]{Integer.parseInt(column), Integer.parseInt(line)};
+    }
+    public boolean  validInputUser(String input) {
+        //Check if the input is valid
+        if (!input.equals("0") && !input.equals("1") && !input.equals("2")) {
+            printer.displayInputError();
+            return false;
+        }
+        return true;
+    }
+    /**
+     *  Checks if the cell played is available
+     */
     @Override
     public boolean  isBoxFilled(int[] input){
         int inputColumn = input[TUPLEY];
@@ -124,7 +192,9 @@ public class TicTacToe implements GameControllerInterface {
         }
     }
     /**
-     *  Fonction permettant de déterminer si la partie est gagnée
+     *  Checks if the game is over, by turns (board filed up) or by win, displays the board after the move has been played
+     *  and return the game's state.
+     *
      */
     @Override
     public GameFunction isGameOver(){
@@ -139,6 +209,9 @@ public class TicTacToe implements GameControllerInterface {
         }
         return GameFunction.PLAY;
     }
+    /**
+     *  Checks if the game is over by win.
+     */
     @Override
     public boolean isWinner(){
         return boardGame.processInputColumnLines(activePlayer.getLineArrays(), 0, this.boardGame.getPlayersInput(), this)
@@ -195,10 +268,15 @@ public class TicTacToe implements GameControllerInterface {
         }
         return false;
     }
+    /**
+     *  Calls the printer in order to display the choice he has to make regarding the player type.
+     */
     @Override
     public void getPlayerTypeChoice(String playerNth, String pSymbol){
         this.printer.displayPlayersTypeChoice(playerNth,pSymbol);
     }
+
+
 
 
 }

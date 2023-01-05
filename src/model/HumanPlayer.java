@@ -10,25 +10,22 @@
  * Copyright     : moi
  */
 package src.model;
+import src.controller.GameControllerInterface;
 import src.vue.ShowInterface;
 import src.vue.UserInteractionInterface;
 
 public class HumanPlayer extends Player{
     final protected String TYPE = "Human";
 
+    public int[] playMove() {
+        return new int[0];
+    }
     public HumanPlayer(String pSymbol){
         super.symbol = pSymbol;
     }
     @Override
     public String getType(){
         return this.TYPE;
-    }
-
-    @Override
-    public int[] getMoveFromPlayer(UserInteractionInterface interactor, ShowInterface pPrinter) {
-        //Check if box is occupied
-        int [] playerEntries = askPlayerInput(interactor, pPrinter);
-        return playerEntries;
     }
 
     public String getSymbol(){

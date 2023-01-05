@@ -22,7 +22,6 @@ public class UserInteraction implements UserInteractionInterface {
     Scanner moveScanner;
     Scanner newGameScanner;
     Scanner gameChoiceScanner;
-    ShowInterface printRequests;
 
     public UserInteraction(){
         setupPlayersScanner = new Scanner(System.in);

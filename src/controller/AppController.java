@@ -24,7 +24,9 @@ public class AppController{
         this.interaction = Factory.createInterator();
         this.stateMachine = GameState.CHOOSEGAME;
     }
-
+    /**
+     *  Lunch program and switch states
+     */
     public void run(){
         String gameChoice = "0";
         while(stateMachine != GameState.EXIT){

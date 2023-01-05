@@ -23,10 +23,12 @@ import src.vue.UserInteractionInterface;
 import java.util.ArrayList;
 
 public class TicTacToe3 implements GameControllerInterface {
-    private final int winCondition = 3;
-    private final int endGameByTurns = 9;
-    private int sizeHeight;
-    private int sizeLength;
+    private final int WINCONDITION = 3;
+    private final int ENDGAMEBYTURNS = 9;
+    private final int TUPLEX = 0;
+    private final int TUPLEY = 1;
+    private final int sizeHeight = 3;
+    private final int sizeLength = 3;
     private Player player1;
     private Player player2;
     private Player activePlayer;
@@ -37,18 +39,12 @@ public class TicTacToe3 implements GameControllerInterface {
     private BoardInterface boardGame;
 
     public TicTacToe3() {
-        //Initiate variables
-        this.sizeHeight = 3;
-        this.sizeLength = 3;
         // Initiate Objects
         this.boardGame = new BoardGame();
         //boardGame.setBoardCell(super.initCells(this.sizeHeight, this.sizeLength));
         this.gameStateMachine = GameFunction.INITGAME;
     }
     public TicTacToe3(ShowInterface pPrinter, UserInteractionInterface pInteraction) {
-        //Initiate variables
-        this.sizeHeight = 3;
-        this.sizeLength = 3;
         // Initiate Objects
         this.boardGame = new BoardGame();
         //boardGame.setBoardCell(super.initCells(this.sizeHeight, this.sizeLength));
@@ -100,32 +96,60 @@ public class TicTacToe3 implements GameControllerInterface {
         return cells;
     }
     public GameFunction play(){
-        this.activePlayer = addTurnSetActivePlayerDisplayBoard();
+        this.activePlayer = addTurnSetDisplayBoardSetActivePlayer();
         return moveValidAndSetStateMachine();
     }
-    public Player addTurnSetActivePlayerDisplayBoard() {
+    public Player addTurnSetDisplayBoardSetActivePlayer() {
         this.boardGame.addTurn();
         printer.displayBoard(this.sizeLength, this.sizeHeight, this.boardGame.getBoardCell());
         return (this.activePlayer == this.player1) ? this.player2 : this.player1;
     }
     public GameFunction moveValidAndSetStateMachine(){
-        this.boardGame.setPlayerInput(getValidMove());
+        this.boardGame.setPlayerInput(getAvailableMove());
         this.boardGame.setOwner(this.activePlayer.getSymbol());
         return isGameOver();
     }
     @Override
-    public int[] getValidMove(){
+    public int[] getAvailableMove(){
         int[] inputPlayer;
         printer.displayPlayerTurn(this.activePlayer.getSymbol());
         do {
-            inputPlayer = this.activePlayer.getMoveFromPlayer(interaction, printer);
+            inputPlayer = getValidPlayerInput();
         } while (isBoxFilled(inputPlayer));
         return inputPlayer;
     }
+    public int[] getValidPlayerInput() {
+        boolean validColumn, validLine;
+        String column, line;
+
+        //Check if column input is valid
+        do {
+            column = interaction.askPlayerMove("column");
+            validColumn = validInputUser(column);
+        } while (!validColumn);
+
+        //Check if line input is valid
+        do {
+            printer.displayPlayerMoveChoice("line");
+            line = interaction.askPlayerMove("line");
+            validLine = validInputUser(line);
+        } while (!validLine);
+
+        return new int[]{Integer.parseInt(column), Integer.parseInt(line)};
+    }
+    public boolean  validInputUser(String input) {
+        //Check if the input is valid
+        if (!input.equals("0") && !input.equals("1") && !input.equals("2")) {
+            printer.displayInputError();
+            return false;
+        }
+        return true;
+    }
+    @Override
     public boolean  isBoxFilled(int[] input){
-        int inputColumn = input[1];
-        int inputLine = input[0];
-        if(boardGame.getBoardCell()[inputColumn][inputLine].representation == " "){
+        int inputColumn = input[TUPLEY];
+        int inputLine = input[TUPLEX];
+        if(boardGame.getBoardCell()[inputColumn][inputLine].getRepresentation().equalsIgnoreCase(" ")){
             return false;
         } else {
             if (this.activePlayer.getType().equals("Human")){
@@ -142,7 +166,7 @@ public class TicTacToe3 implements GameControllerInterface {
             printer.displayBoard(this.sizeLength, this.sizeHeight, boardGame.getBoardCell());
             printer.displayWinner(activePlayer.getSymbol());
             return GameFunction.ENDGAME;
-        } else if (this.boardGame.getTurns() == endGameByTurns){
+        } else if (this.boardGame.getTurns() == ENDGAMEBYTURNS){
             printer.displayBoard(this.sizeLength, this.sizeHeight, boardGame.getBoardCell());
             printer.displayDraw();
             return GameFunction.ENDGAME;
@@ -170,7 +194,7 @@ public class TicTacToe3 implements GameControllerInterface {
                 array.add(playersInput);
                 entered = true;
             }
-            if (array.size() == this.winCondition){
+            if (array.size() == this.WINCONDITION){
                 return true;
             }
         }
@@ -195,7 +219,7 @@ public class TicTacToe3 implements GameControllerInterface {
             if(coordinateToFitX == coordinateToFitY){
                 array.add(playersInput);
             }
-            if (array.size() == this.winCondition){
+            if (array.size() == this.WINCONDITION){
                 return true;
             }
         }

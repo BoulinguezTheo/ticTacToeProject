@@ -1,6 +1,5 @@
 package src.controller;
 
-import src.Factory;
 import src.model.Cell;
 import src.model.Player;
 import java.util.ArrayList;
@@ -10,9 +9,9 @@ public interface GameControllerInterface {
     Cell[][] initCells();
     GameState playGame(GameState pStateMachine);
     GameFunction play();
-    Player addTurnSetActivePlayerDisplayBoard();
+    Player addTurnSetDisplayBoardSetActivePlayer();
     GameFunction moveValidAndSetStateMachine();
-    int[] getValidMove();
+    int[] getAvailableMove();
     boolean  isBoxFilled(int[] input);
     boolean checkIfGameWonColumnAndLines(ArrayList<ArrayList<int[]>> arrayToCheck, int coordinateToCheck);
     boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign);
