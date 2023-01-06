@@ -17,6 +17,5 @@ public interface GameControllerInterface {
     boolean checkIfGameWonDiags(ArrayList<ArrayList<int[]>> arrayToCheck, int sign);
     GameFunction isGameOver();
     boolean isWinner();
-    void getPlayerTypeChoice(String playerNth, String pSymbol);
     Player createPlayer(String pPlayer, String pSymbol);
 }

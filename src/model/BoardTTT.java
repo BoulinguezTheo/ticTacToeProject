@@ -16,13 +16,9 @@ import src.controller.GameControllerInterface;
 
 public class BoardTTT implements BoardInterface {
     private final int WINCONDITION = 3;
-
     private final int ENDGAMEBYTURNS = 9;
     private final int SIZEHEIGHT = 3;
     private final int SIZELENGTH = 3;
-
-
-
     private Player player1;
     private Player player2;
     private Player activePlayer;

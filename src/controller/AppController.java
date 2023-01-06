@@ -4,22 +4,22 @@ package src.controller;
 import src.Factory;
 import src.vue.ShowInterface;
 import src.vue.UserInteractionInterface;
+import src.vue.View;
+import src.vue.ViewEn;
 
 public class AppController{
 
     private final String TICTACTOE = "1";
     private final String POWER4 = "2";
     private final String GOMUKO = "3";
-    private ShowInterface printer;
     private GameControllerInterface game;
-    private UserInteractionInterface interaction;
+    private View view;
     private GameState stateMachine;
 
 
     
     public AppController(){
-        this.printer = Factory.createPrinterEn();
-        this.interaction = Factory.createInterator();
+        this.view = Factory.createViewEn();
         this.stateMachine = GameState.CHOOSEGAME;
     }
     /**
@@ -36,18 +36,18 @@ public class AppController{
                 case EXIT -> System.out.println();
             }
         }
-        this.printer.displayExit();
+        this.view.displayExit();
     }
     private String askGameChoice() {
-        this.printer.displayGameChoice();
-        String input = this.interaction.getGameChoice();
+        this.view.displayGameChoice();
+        String input = this.view.getGameChoice();
         boolean correctInput = false;
         while (!correctInput) {
             if (input.equalsIgnoreCase("1") || input.equalsIgnoreCase("2") || input.equalsIgnoreCase("3")){
                 correctInput = true;
             } else {
-                this.printer.displayGameChoice();
-                input = this.interaction.getGameChoice();
+                this.view.displayGameChoice();
+                input = this.view.getGameChoice();
             }
         }
         return input;
@@ -55,13 +55,13 @@ public class AppController{
     private GameState initGame(String pGameChoice){
         switch(pGameChoice){
             case TICTACTOE:
-                this.game = new TicTacToe(this.printer, this.interaction);
+                this.game = new TicTacToe(this.view);
                 break;
             case POWER4:
-                this.game = new TicTacToe2(this.printer, this.interaction);
+                this.game = new TicTacToe2(this.view);
                 break;
             case GOMUKO:
-                this.game = new TicTacToe3(this.printer, this.interaction);
+                this.game = new TicTacToe3(this.view);
                 break;
         }
         return GameState.PLAYING;
@@ -88,7 +88,7 @@ public class AppController{
         String newGameChoice;
         do {
             displayNewGameOrOtherGame(function);
-            newGameChoice = this.interaction.getPlayAgainChoice();
+            newGameChoice = this.view.getPlayAgainChoice();
             if (newGameChoice.equalsIgnoreCase("Y") || newGameChoice.equalsIgnoreCase("N")) {
                 correctEntry = true;
             }
@@ -97,9 +97,9 @@ public class AppController{
     }
     private void displayNewGameOrOtherGame(boolean function){
         if (function){
-            this.printer.displayAskNewGame();
+            this.view.displayAskNewGame();
         } else {
-            this.printer.displayAskOtherGame();
+            this.view.displayAskOtherGame();
         }
     }
 }
