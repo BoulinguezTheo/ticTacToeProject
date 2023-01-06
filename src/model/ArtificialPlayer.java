@@ -27,14 +27,6 @@ public class ArtificialPlayer extends Player {
     public String getType(){
         return this.TYPE;
     }
-    @Override
-    public int[] playMove(){
-        Random randomInt = new Random();
-        int column = randomInt.nextInt(0, 3);
-        int line = randomInt.nextInt(0, 3);
-        return new int[] {column, line};
-    }
-
     public String getSymbol(){
         return this.symbol;
     }

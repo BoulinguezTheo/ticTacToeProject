@@ -17,9 +17,6 @@ import src.vue.UserInteractionInterface;
 public class HumanPlayer extends Player{
     final protected String TYPE = "Human";
 
-    public int[] playMove() {
-        return new int[0];
-    }
     public HumanPlayer(String pSymbol){
         super.symbol = pSymbol;
     }

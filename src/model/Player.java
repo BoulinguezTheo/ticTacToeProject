@@ -32,7 +32,6 @@ public abstract class Player {
         this.diagXMinusOneArrays = new ArrayList<>();
         this.diagXPlusOneArrays = new ArrayList<>();
     }
-    public abstract int[] playMove();
     public String getSymbol(){
         return this.symbol;
     }

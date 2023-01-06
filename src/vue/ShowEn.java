@@ -33,7 +33,7 @@ public class ShowEn implements ShowInterface {
     System.out.println("-------------");
     for (int i = 0; i < length; i++) {
       for (int j = 0; j < height; j++) {
-        System.out.print(cellsBoard[i][j].getCell());
+        System.out.print(cellsBoard[i][j].getCell()); //!!! info from model CELL
       }
       System.out.println("|");
       System.out.println("-------------");
@@ -59,7 +59,7 @@ public class ShowEn implements ShowInterface {
   }
   @Override
   public void displayPlayerTurn(String pSymbolPlayer) {
-    System.out.println("It's player '" + pSymbolPlayer + "' turn");
+    System.out.println("It's player '" + pSymbolPlayer + "' turn"); // !!!info from controller TTT
   }
   @Override
   public void displayWinner(String winner){

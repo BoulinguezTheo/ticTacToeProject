@@ -214,10 +214,14 @@ public class TicTacToe implements GameControllerInterface {
      */
     @Override
     public boolean isWinner(){
-        return boardGame.processInputColumnLines(activePlayer.getLineArrays(), 0, this.boardGame.getPlayersInput(), this)
-                || boardGame.processInputColumnLines(activePlayer.getColumnArrays(), 1, this.boardGame.getPlayersInput(), this)
-                || boardGame.processInputDiags(activePlayer.getDiagXMinusOneArrays(), -1, this.boardGame.getPlayersInput(), this)
-                || boardGame.processInputDiags(activePlayer.getDiagXPlusOneArrays(), 1, this.boardGame.getPlayersInput(), this);
+        int coordinateLines = 0;
+        int coordinateColumn = 1;
+        int signDiagXPlusOne = -1;
+        int signDiagXMinusOne = 1;
+        return boardGame.processInputColumnLines(activePlayer.getLineArrays(), coordinateLines, this.boardGame.getPlayersInput(), this)
+                || boardGame.processInputColumnLines(activePlayer.getColumnArrays(), coordinateColumn, this.boardGame.getPlayersInput(), this)
+                || boardGame.processInputDiags(activePlayer.getDiagXMinusOneArrays(), signDiagXPlusOne, this.boardGame.getPlayersInput(), this)
+                || boardGame.processInputDiags(activePlayer.getDiagXPlusOneArrays(), signDiagXMinusOne, this.boardGame.getPlayersInput(), this);
     }
     /**
      *  Permet de déterminé si une ligne ou une colonne est gagnante
@@ -251,9 +255,10 @@ public class TicTacToe implements GameControllerInterface {
         int[] playersInput = this.boardGame.getPlayersInput();
         int x = playersInput[TUPLEX];
         int y = playersInput[TUPLEY];
+        int getArrayNum = 0;
         boolean entered = false;
         for(ArrayList<int[]> array : arrayToCheck){
-            int[] getTuple = array.get(0);
+            int[] getTuple = array.get(getArrayNum);
             int coordinateToFitX = (x - getTuple[TUPLEX]);
             int coordinateToFitY = sign * (y - getTuple[TUPLEY]);
             if(coordinateToFitX == coordinateToFitY){
@@ -275,8 +280,4 @@ public class TicTacToe implements GameControllerInterface {
     public void getPlayerTypeChoice(String playerNth, String pSymbol){
         this.printer.displayPlayersTypeChoice(playerNth,pSymbol);
     }
-
-
-
-
 }
