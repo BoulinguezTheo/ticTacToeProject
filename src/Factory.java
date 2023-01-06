@@ -20,7 +20,7 @@ public class Factory {
         return new UserInteraction();
     }
     public static BoardInterface createBoard(){
-        return new BoardGame();
+        return new BoardTTT();
     }
     public static Cell[][] createCellBoard(int pLength, int pHeight){
         return new Cell[pLength][pHeight];

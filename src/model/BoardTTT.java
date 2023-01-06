@@ -14,32 +14,75 @@ package src.model;
 import java.util.ArrayList;
 import src.controller.GameControllerInterface;
 
-public class BoardGame implements BoardInterface {
+public class BoardTTT implements BoardInterface {
+    private final int WINCONDITION = 3;
+
+    private final int ENDGAMEBYTURNS = 9;
+    private final int SIZEHEIGHT = 3;
+    private final int SIZELENGTH = 3;
+
+
+
+    private Player player1;
+    private Player player2;
+    private Player activePlayer;
     public Cell[][] board;
     public int turns;
-
     private int[] playersInput;
 
-    public BoardGame(){
-        turns = 0;
+
+/*
+ * CONSTRUCTOR
+ **/
+    public BoardTTT(){
+        this.turns = 0;
     }
 
     public void setBoardCell(Cell[][] pBoard){
         board = pBoard;
     }
 
-    public Cell[][] getBoardCell(){
-        return board;
+    public void setPlayer1(Player player1) {
+        this.player1 = player1;
     }
-
+    public void setPlayer2(Player player2) {
+        this.player2 = player2;
+    }
+    public void setActivePlayer(Player activePlayer) {
+        this.activePlayer = activePlayer;
+    }
     public void setPlayerInput(int[] pInput){
         this.playersInput = pInput;
     }
-    public int[] getPlayersInput(){
-        return this.playersInput;
-    }
     public void setOwner(String pSymbol){
         this.board[playersInput[1]][playersInput[0]].setRepresentation(pSymbol);
+    }
+    public Player getPlayer1() {
+        return player1;
+    }
+    public Player getPlayer2() {
+        return player2;
+    }
+    public Player getActivePlayer() {
+        return activePlayer;
+    }
+    public Cell[][] getBoardCell(){
+        return board;
+    }
+    public int getWinCondition() {
+        return WINCONDITION;
+    }
+    public int getEndGameByTurns() {
+        return ENDGAMEBYTURNS;
+    }
+    public int getSizeHeight() {
+        return SIZEHEIGHT;
+    }
+    public int getSizeLength() {
+        return SIZELENGTH;
+    }
+    public int[] getPlayersInput(){
+        return this.playersInput;
     }
 
     public int getTurns(){

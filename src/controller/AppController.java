@@ -3,8 +3,6 @@ package src.controller;
 
 import src.Factory;
 import src.vue.ShowInterface;
-import src.vue.UserInteraction;
-import src.vue.ShowEn;
 import src.vue.UserInteractionInterface;
 
 public class AppController{

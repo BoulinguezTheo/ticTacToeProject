@@ -21,15 +21,10 @@ import src.vue.ShowInterface;
 import src.vue.UserInteractionInterface;
 
 public class TicTacToe implements GameControllerInterface {
-    private final int WINCONDITION = 3;
-    private final int ENDGAMEBYTURNS = 9;
+
     private final int TUPLEX = 0; 
     private final int TUPLEY = 1;
-    private final int SIZEHEIGHT = 3;
-    private final int SIZELENGTH = 3;
-    private Player player1;
-    private Player player2;
-    private Player activePlayer;
+
     private GameFunction gameStateMachine;
     private UserInteractionInterface interaction;
     private ShowInterface printer;
@@ -72,8 +67,8 @@ public class TicTacToe implements GameControllerInterface {
         //Setup players
         String symbolPlayer1 = "X";
         String symbolPlayer2 = "O";
-        this.player1 = createPlayer(interaction.askPlayerType("1st", symbolPlayer1, this), symbolPlayer1);
-        this.player2 = createPlayer(interaction.askPlayerType("2nd", symbolPlayer2, this), symbolPlayer2);
+        boardGame.setPlayer1(createPlayer(interaction.askPlayerType("1st", symbolPlayer1, this), symbolPlayer1));
+        boardGame.setPlayer2(createPlayer(interaction.askPlayerType("2nd", symbolPlayer2, this), symbolPlayer2));
         //SetupBoardGame
         boardGame.setBoardCell(initCells());
         return GameFunction.PLAY;
@@ -92,9 +87,11 @@ public class TicTacToe implements GameControllerInterface {
      */
     @Override
     public Cell[][] initCells(){
-        var cells = Factory.createCellBoard(this.SIZELENGTH, this.SIZEHEIGHT);
-        for (int i = 0; i < this.SIZEHEIGHT; i++){
-            for (int j = 0; j < this.SIZELENGTH; j++){
+        int sizeHeight = boardGame.getSizeHeight();
+        int sizeLength = boardGame.getSizeLength();
+        var cells = Factory.createCellBoard(sizeLength, sizeHeight);
+        for (int i = 0; i < sizeHeight; i++){
+            for (int j = 0; j < sizeLength; j++){
                 cells[i][j] = Factory.createCell();
             }
         }
@@ -106,7 +103,7 @@ public class TicTacToe implements GameControllerInterface {
      */
     @Override
     public GameFunction play(){
-        this.activePlayer = addTurnSetDisplayBoardSetActivePlayer();
+         boardGame.setActivePlayer(addTurnSetDisplayBoardSetActivePlayer());
         return moveValidAndSetStateMachine();
     }
     /**
@@ -114,8 +111,8 @@ public class TicTacToe implements GameControllerInterface {
      */
     public Player addTurnSetDisplayBoardSetActivePlayer() {
         this.boardGame.addTurn();
-        printer.displayBoard(this.SIZELENGTH, this.SIZEHEIGHT, this.boardGame.getBoardCell());
-        return (this.activePlayer == this.player1) ? this.player2 : this.player1;
+        printer.displayBoard(boardGame.getSizeLength(), boardGame.getSizeHeight(), this.boardGame.getBoardCell());
+        return (boardGame.getActivePlayer() == boardGame.getPlayer1()) ? boardGame.getPlayer2() : boardGame.getPlayer1();
     }
     /**
      *  Gets the move played, set the move in the board and returns if the game is over
@@ -123,7 +120,7 @@ public class TicTacToe implements GameControllerInterface {
     @Override
     public GameFunction moveValidAndSetStateMachine(){
         this.boardGame.setPlayerInput(getAvailableMove());
-        this.boardGame.setOwner(this.activePlayer.getSymbol());
+        this.boardGame.setOwner(boardGame.getActivePlayer().getSymbol());
         return isGameOver();
     }
     /**
@@ -132,14 +129,14 @@ public class TicTacToe implements GameControllerInterface {
     @Override
     public int[] getAvailableMove(){
         int[] inputPlayer;
-        printer.displayPlayerTurn(this.activePlayer.getSymbol());
+        printer.displayPlayerTurn(boardGame.getActivePlayer().getSymbol());
         do {
             inputPlayer = getMove();
         } while (isBoxFilled(inputPlayer));
         return inputPlayer;
     }
     public int[] getMove(){
-        return this.activePlayer.getType().equalsIgnoreCase("bot") ? generateRandomInput() : getValidPlayerInput();
+        return boardGame.getActivePlayer().getType().equalsIgnoreCase("bot") ? generateRandomInput() : getValidPlayerInput();
     }
     public int[] generateRandomInput(){
         Random randomInt = new Random();
@@ -185,7 +182,7 @@ public class TicTacToe implements GameControllerInterface {
         if(boardGame.getBoardCell()[inputColumn][inputLine].getRepresentation().equalsIgnoreCase(" ")){
             return false;
         } else {
-            if (this.activePlayer.getType().equals("Human")){
+            if (boardGame.getActivePlayer().getType().equals("Human")){
                 this.printer.displayBoxIsFilled();
             }
             return true;
@@ -199,11 +196,11 @@ public class TicTacToe implements GameControllerInterface {
     @Override
     public GameFunction isGameOver(){
         if(isWinner()){
-            printer.displayBoard(this.SIZELENGTH, this.SIZEHEIGHT, boardGame.getBoardCell());
-            printer.displayWinner(activePlayer.getSymbol());
+            printer.displayBoard(boardGame.getSizeLength(), boardGame.getSizeHeight(), boardGame.getBoardCell());
+            printer.displayWinner(boardGame.getActivePlayer().getSymbol());
             return GameFunction.ENDGAME;
-        } else if (this.boardGame.getTurns() == ENDGAMEBYTURNS){
-            printer.displayBoard(this.SIZELENGTH, this.SIZEHEIGHT, boardGame.getBoardCell());
+        } else if (this.boardGame.getTurns() == boardGame.getEndGameByTurns()){
+            printer.displayBoard(boardGame.getSizeLength(), boardGame.getSizeHeight(), boardGame.getBoardCell());
             printer.displayDraw();
             return GameFunction.ENDGAME;
         }
@@ -218,6 +215,7 @@ public class TicTacToe implements GameControllerInterface {
         int coordinateColumn = 1;
         int signDiagXPlusOne = -1;
         int signDiagXMinusOne = 1;
+        Player activePlayer = boardGame.getActivePlayer();
         return boardGame.processInputColumnLines(activePlayer.getLineArrays(), coordinateLines, this.boardGame.getPlayersInput(), this)
                 || boardGame.processInputColumnLines(activePlayer.getColumnArrays(), coordinateColumn, this.boardGame.getPlayersInput(), this)
                 || boardGame.processInputDiags(activePlayer.getDiagXMinusOneArrays(), signDiagXPlusOne, this.boardGame.getPlayersInput(), this)
@@ -237,7 +235,7 @@ public class TicTacToe implements GameControllerInterface {
                 array.add(playersInput);
                 entered = true;
             }
-            if (array.size() == this.WINCONDITION){
+            if (array.size() == boardGame.getWinCondition()){
                 return true;
             }
         }
@@ -264,7 +262,7 @@ public class TicTacToe implements GameControllerInterface {
             if(coordinateToFitX == coordinateToFitY){
                 array.add(playersInput);
             }
-            if (array.size() == this.WINCONDITION){
+            if (array.size() == boardGame.getWinCondition()){
                 return true;
             }
         }

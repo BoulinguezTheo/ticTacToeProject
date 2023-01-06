@@ -30,5 +30,4 @@ public class ArtificialPlayer extends Player {
     public String getSymbol(){
         return this.symbol;
     }
-
 }

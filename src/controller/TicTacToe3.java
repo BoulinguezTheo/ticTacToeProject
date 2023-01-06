@@ -13,7 +13,7 @@
 package src.controller;
 
 import src.Factory;
-import src.model.BoardGame;
+import src.model.BoardTTT;
 import src.model.Cell;
 import src.model.BoardInterface;
 import src.model.Player;
@@ -40,13 +40,13 @@ public class TicTacToe3 implements GameControllerInterface {
 
     public TicTacToe3() {
         // Initiate Objects
-        this.boardGame = new BoardGame();
+        this.boardGame = new BoardTTT();
         //boardGame.setBoardCell(super.initCells(this.sizeHeight, this.sizeLength));
         this.gameStateMachine = GameFunction.INITGAME;
     }
     public TicTacToe3(ShowInterface pPrinter, UserInteractionInterface pInteraction) {
         // Initiate Objects
-        this.boardGame = new BoardGame();
+        this.boardGame = new BoardTTT();
         //boardGame.setBoardCell(super.initCells(this.sizeHeight, this.sizeLength));
         this.gameStateMachine = GameFunction.INITGAME;
         this.printer = pPrinter;
