@@ -119,7 +119,12 @@ public class TicTacToe implements GameControllerInterface {
      */
     @Override
     public GameFunction moveValidAndSetStateMachine(){
-        this.boardGame.setPlayerInput(getAvailableMove());
+        int[] exit = {-1, -1};
+        int[] inputPlayer = getAvailableMove();
+        if (inputPlayer[0] == -1) {
+            return GameFunction.EXIT;
+        }
+        this.boardGame.setPlayerInput(inputPlayer);
         this.boardGame.setOwner(boardGame.getActivePlayer().getSymbol());
         return isGameOver();
     }
@@ -129,9 +134,14 @@ public class TicTacToe implements GameControllerInterface {
     @Override
     public int[] getAvailableMove(){
         int[] inputPlayer;
+        int[] exit = {-1, -1};
         this.view.displayPlayerTurn(boardGame.getActivePlayer().getSymbol());
         do {
             inputPlayer = getMove();
+            if (inputPlayer[0] == -1){
+                System.out.println("test");
+                return inputPlayer;
+            }
         } while (isBoxFilled(inputPlayer));
         return inputPlayer;
     }
@@ -162,9 +172,14 @@ public class TicTacToe implements GameControllerInterface {
             validLine = validInputUser(line);
         } while (!validLine);
 
+        if(column.equalsIgnoreCase("exit") && line.equalsIgnoreCase("exit")){
+            return new int[]{-1, -1};
+        }
+
         return new int[]{Integer.parseInt(column), Integer.parseInt(line)};
     }
     public boolean  validInputUser(String input) {
+        if(input.equalsIgnoreCase("exit")){return true;}
         //Check if the input is valid
         if (!input.equals("0") && !input.equals("1") && !input.equals("2")) {
             this.view.displayInputError();
