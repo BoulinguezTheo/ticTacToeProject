@@ -17,17 +17,23 @@ import java.util.Random;
 
 import src.Factory;
 import src.model.*;
+import src.vue.MenuObserver;
 import src.vue.UserInteractionInterface;
 import src.vue.View;
 import src.vue.ViewEn;
 
-public class TicTacToe implements GameControllerInterface {
+public class TicTacToe implements GameControllerInterface, MenuObserver {
 
     private final int TUPLEX = 0; 
     private final int TUPLEY = 1;
 
     private GameFunction gameStateMachine;
     private View view;
+
+    public BoardInterface getBoardGame() {
+        return boardGame;
+    }
+
     private BoardInterface boardGame;
 
     public TicTacToe(View pView) {
@@ -36,6 +42,7 @@ public class TicTacToe implements GameControllerInterface {
         this.gameStateMachine = GameFunction.INITGAME;
         this.view = pView;
         this.view.setBoardGame(this.boardGame);
+        this.view.addMenuOberserver(this);
     }
     /**
      *  Switch states as the game progresses
@@ -54,7 +61,7 @@ public class TicTacToe implements GameControllerInterface {
                     this.gameStateMachine = GameFunction.EXIT;
                     break;
                 case EXIT:
-                    break;
+                    return GameState.EXIT;
             }
         }
         return GameState.NEWGAME;
@@ -285,5 +292,22 @@ public class TicTacToe implements GameControllerInterface {
             boardGame.createNewArrayOfCoordinates(arrayToCheck, playersInput);
         }
         return false;
+    }
+
+    @Override
+    public void onCloseAsked() {
+        System.out.println("Close");
+    }
+
+    @Override
+    public void onQuitAsked() {
+        System.out.println("Quit");
+        this.gameStateMachine=GameFunction.EXIT;
+    }
+
+    @Override
+    public void onLanguageAsked() {
+        System.out.println("Language");
+
     }
 }

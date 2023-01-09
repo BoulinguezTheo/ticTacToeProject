@@ -106,18 +106,30 @@ public class ViewEn extends View {
         do {
             displayPlayersTypeChoice(playerNth, pSymbol);
             player = this.setupPlayersScanner.nextLine();
-        }while (!player.equals("1") && !player.equals("2"));
+        }while(!player.equals("1") && !player.equals("2") && !player.equals("q"));
         //Need close scanner but don't know where
-        return player;
+        if(!checkIfQuit(player)) return player;
+        else return "";
+    }
+
+    private boolean checkIfQuit(String choice){
+        if(choice.equals("q")){
+            notifyQuitAsked();
+            return true;
+        }
+        return false;
     }
 
     @Override
     public String askPlayerMove(String coordinate) {
-        return moveScanner.nextLine();
+        String choice = moveScanner.nextLine();
+        checkIfQuit(choice);
+        return choice;
     }
 
     @Override
     public String getPlayAgainChoice() {
+        notifyCloseAsked();
         return newGameScanner.nextLine();
     }
 

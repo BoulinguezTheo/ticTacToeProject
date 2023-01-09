@@ -2,6 +2,7 @@ package src.controller;
 
 
 import src.Factory;
+import src.model.BoardInterface;
 import src.vue.ShowInterface;
 import src.vue.UserInteractionInterface;
 import src.vue.View;
@@ -57,17 +58,17 @@ public class AppController{
             case TICTACTOE:
                 this.game = new TicTacToe(this.view);
                 break;
-            case POWER4:
-                this.game = new TicTacToe2(this.view);
-                break;
-            case GOMUKO:
-                this.game = new TicTacToe3(this.view);
-                break;
+//            case POWER4:
+//                this.game = new TicTacToe2(this.view);
+//                break;
+//            case GOMUKO:
+//                this.game = new TicTacToe3(this.view);
+//                break;
         }
         return GameState.PLAYING;
     }
     private GameState play(){
-        return this.game.playGame(this.stateMachine);
+        return this.game.playGame(stateMachine);
     }
     private GameState askPlayAgain(boolean function){
         String newGame = correctNewGameEntry(function);
@@ -101,5 +102,8 @@ public class AppController{
         } else {
             this.view.displayAskOtherGame();
         }
+    }
+    public BoardInterface getBoard(){
+        return this.game.getBoardGame();
     }
 }
